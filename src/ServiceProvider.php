@@ -6,7 +6,11 @@ use Illuminate\Contracts\Foundation\Application;
 use MityDigital\StatamicTwoFactor\Fieldtypes\TwoFactor as TwoFactorFieldtype;
 use MityDigital\StatamicTwoFactor\Http\Middleware\EnforceTwoFactor;
 use MityDigital\StatamicTwoFactor\Listeners\UserSavedListener;
+use MityDigital\StatamicTwoFactor\Support\Google2FA;
+use MityDigital\StatamicTwoFactor\UpdateScripts\UpdateUserBlueprint;
 use Statamic\Events\UserSaved;
+use Statamic\Facades\User;
+use Statamic\Fields\Field;
 use Statamic\Http\Controllers\CP\Auth\LoginController;
 use Statamic\Providers\AddonServiceProvider;
 
@@ -32,6 +36,10 @@ class ServiceProvider extends AddonServiceProvider
         'cp' => __DIR__.'/../routes/cp.php',
     ];
 
+    protected $updateScripts = [
+        UpdateUserBlueprint::class
+    ];
+
     protected $vite = [
         'input' => [
             'resources/css/cp.css',
@@ -42,12 +50,12 @@ class ServiceProvider extends AddonServiceProvider
 
     public function bootAddon()
     {
-        $this->app->singleton(\MityDigital\StatamicTwoFactor\Support\Google2FA::class, function (Application $app) {
-            return new \MityDigital\StatamicTwoFactor\Support\Google2FA();
+        $this->app->singleton(Google2FA::class, function (Application $app) {
+            return new Google2FA();
         });
 
         $this->app->extend(LoginController::class, function () {
-            return new \MityDigital\StatamicTwoFactor\Http\Controllers\LoginController();
+            return new Http\Controllers\LoginController();
         });
 
         // publish migrations
