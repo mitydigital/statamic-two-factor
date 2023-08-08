@@ -1,0 +1,54 @@
+{
+  "name": "mitydigital/statamic-two-factor",
+  "description": "Two Factor Authentication for Statamic 4",
+  "license": "MIT",
+  "type": "statamic-addon",
+  "autoload": {
+    "psr-4": {
+      "MityDigital\\StatamicTwoFactor\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "MityDigital\\StatamicTwoFactor\\Tests\\": "tests"
+    }
+  },
+  "extra": {
+    "statamic": {
+      "name": "Statamic Two Factor",
+      "description": "Two Factor Authentication for Statamic 4"
+    },
+    "laravel": {
+      "providers": [
+        "MityDigital\\StatamicTwoFactor\\ServiceProvider"
+      ]
+    }
+  },
+  "require": {
+    "php": "^8.2",
+    "bacon/bacon-qr-code": "^2.0",
+    "pragmarx/google2fa": "^8.0",
+    "statamic/cms": "^4.15.0"
+  },
+  "require-dev": {
+    "pestphp/pest": "^2.9",
+    "orchestra/testbench": "^8.5",
+    "laravel/pint": "^1.10",
+    "spatie/pest-plugin-test-time": "^2.0",
+    "pestphp/pest-plugin-laravel": "^2.1"
+  },
+  "scripts": {
+    "lint": [
+      "php-cs-fixer fix ./src"
+    ],
+    "test": [
+      "php -d memory_limit=-1 -d max_execution_time=0 ./vendor/bin/pest"
+    ]
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true,
+      "pixelfear/composer-dist-plugin": true
+    }
+  }
+}

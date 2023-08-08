@@ -1,0 +1,153 @@
+<template>
+    <div>
+        <div class="mb-8">
+            <div class="font-semibold mb-2">{{ __('statamic-two-factor::profile.recovery_codes.title') }}</div>
+            <div class="text-xs text-gray-700 mb-4">
+                <p class="mb-1">{{ __('statamic-two-factor::profile.recovery_codes.intro') }}</p>
+            </div>
+
+            <div class="sm:flex -mt-2">
+                <button :disabled="codes"
+                        @click.prevent="show"
+                        class="btn mt-2 mr-2">{{ __('statamic-two-factor::profile.recovery_codes.show.action') }}</button>
+                <button @click.prevent="confirming = true"
+                        class="btn mt-2">{{ __('statamic-two-factor::profile.recovery_codes.regenerate.action') }}</button>
+            </div>
+
+            <div v-if="codes" class="bg-gray-200 inline-block rounded-lg px-4 py-4 mt-6">
+                <div class="px-2 text-sm font-medium mb-2">
+                    <span v-if="newCodes">{{ __('statamic-two-factor::profile.recovery_codes.codes.new') }}:</span>
+                    <span v-else>{{ __('statamic-two-factor::profile.recovery_codes.codes.show') }}:</span>
+                </div>
+                <div class="font-mono flex flex-wrap text-gray-700">
+                    <div v-for="(code, index) in codes" :key="code" class="px-2">{{ code }}</div>
+                </div>
+                <div v-if="newCodes"
+                     class="text-sm mt-2 px-2 text-red-500">{{ __('statamic-two-factor::profile.recovery_codes.codes.footnote') }}</div>
+            </div>
+        </div>
+
+        <confirmation-modal
+            v-if="confirming"
+            :title="__('statamic-two-factor::profile.recovery_codes.regenerate.confirm.title')"
+            :danger="true"
+            @confirm="regenerate"
+            @cancel="confirming = false"
+        >
+            <p class="mb-2">{{ __('statamic-two-factor::profile.recovery_codes.regenerate.confirm.body_1') }}</p>
+            <p>{{ __('statamic-two-factor::profile.recovery_codes.regenerate.confirm.body_2') }}</p>
+        </confirmation-modal>
+    </div>
+</template>
+<script>
+
+export default {
+
+    mixins: [Fieldtype],
+
+    props: {
+        codes: {
+            required:true,
+        },
+        routes: {
+            required: true
+        }
+    },
+
+    computed: {
+        timerId() {
+            return 'statamic-two-factor-recovery-codes-' + this._uid;
+        }
+    },
+
+    data: function () {
+        return {
+            codes: null,
+
+            confirming: false,
+
+            newCodes: false
+        }
+    },
+
+    methods: {
+
+        regenerate() {
+            // we must have a route
+            if (!this.routes.generate) {
+                return;
+            }
+
+            // clear codes
+            this.codes = null;
+
+            // close dialog
+            this.confirming = false;
+
+            // start the progress timer
+            this.$progress.start(this.timerId);
+
+            fetch(this.routes.generate, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': Statamic.$config.get('csrfToken'),
+                    'X-Requested-With': 'XMLHttpRequest',
+                }
+            })
+                .then(res => res.json())
+                .then((data) => {
+                    // update codes
+                    this.codes = data.recovery_codes;
+
+                    // mark as re-generated
+                    this.newCodes = true;
+                })
+                .catch((error) => {
+                    // a js error took place
+                    this.$toast.error(error.message);
+                })
+                .finally(() => {
+                    // always executed
+                    this.$progress.complete(this.timerId);
+                    this.confirming = false;
+                });
+        },
+
+        show() {
+            // we must have a route
+            if (!this.routes.show) {
+                return;
+            }
+
+            // clear codes
+            this.codes = null;
+
+            // start the progress timer
+            this.$progress.start(this.timerId);
+
+            fetch(this.routes.show, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                }
+            })
+                .then(res => res.json())
+                .then((data) => {
+                    // update codes
+                    this.codes = data.recovery_codes
+                })
+                .catch((error) => {
+                    // a js error took place
+                    this.$toast.error(error.message);
+                })
+                .finally(() => {
+                    // always executed
+                    this.$progress.complete(this.timerId);
+                    this.confirming = false;
+                });
+        }
+    }
+
+};
+
+</script>

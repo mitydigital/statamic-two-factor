@@ -1,0 +1,45 @@
+/*@tailwind base;*/
+@tailwind components;
+/*@tailwind utilities;*/
+
+.two-factor svg {
+    width:100%;
+    height:100%;
+    display:block;
+}
+
+.two-factor .two-factor-setup .auth-card {
+    @apply md:max-w-2xl;
+}
+
+.two-factor .two-factor-setup .left {
+    @apply hidden md:block;
+}
+
+.two-factor .two-factor-setup .right {
+    @apply md:pl-8;
+}
+
+.two-factor .two-factor-challenge .text-btn {
+    @apply text-gray-400;
+}
+
+.two-factor .two-factor-challenge .text-btn:hover {
+    @apply text-gray-600;
+}
+
+.two-factor .two-factor-challenge .logout {
+    @apply text-gray-500 !important;
+}
+
+.two-factor .two-factor-challenge .logout:hover{
+    @apply text-gray-700 !important;
+}
+
+.rad-theme .two-factor .two-factor-challenge .logout {
+    @apply text-gray-200 !important;
+}
+
+.rad-theme .two-factor .two-factor-challenge .logout:hover {
+    @apply text-white !important;
+}
