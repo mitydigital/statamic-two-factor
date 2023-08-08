@@ -26,7 +26,7 @@ class UpdateUserBlueprint extends UpdateScript
             $contents = $blueprint->contents();
 
             $contents['tabs'][array_key_first($contents['tabs'])]['sections'][] = [
-                'display' => 'Two Factor',
+                'display' => __('statamic-two-factor::messages.blueprint_tab'),
                 'fields' => [
                     [
                         'handle' => 'two_factor',
