@@ -9,12 +9,13 @@
 
 <!-- /statamic:hide -->
 
-> A two factor addon for file-based users.
+> A two factor addon for Statamic.
 
 ## Two Factor is a Commercial Addon.
 
-You can use it for free while in development, but requires a license to use on a live site. Learn more or buy a license
-on The Statamic Marketplace!
+You can use it for free while in development, but requires a license to use on a live site.
+
+Learn more or buy a license on The Statamic Marketplace!
 
 ## How to use
 
@@ -27,7 +28,7 @@ After installation, add some env properties:
 - `STATAMIC_TWO_FACTOR_VALIDITY`, defaults to 43200 (30 days), the number of minutes until a challenge should be made
   again. Set to null to disable repeating challenges for the session.
 
-The installation should add the Two Field  fieldtype to your User blueprint too. This only happens if you do not have a 
+The installation should add the Two Field fieldtype to your User blueprint too. This only happens if you do not have a
 "two_factor" fieldtype already in your Blueprint.
 
 ## User fields

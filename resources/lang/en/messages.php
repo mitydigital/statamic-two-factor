@@ -21,5 +21,5 @@ return [
 
     'blueprint_tab' => 'Two Factor Authentication',
     'blueprint_field' => 'Two Factor Status',
-    'blueprint_field_success' => 'Two Factor field added to the User Blueprint successfully!'
+    'blueprint_field_success' => 'Two Factor field added to the User Blueprint successfully!',
 ];

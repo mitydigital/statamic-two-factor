@@ -28,7 +28,7 @@
     "php": "^8.2",
     "bacon/bacon-qr-code": "^2.0",
     "pragmarx/google2fa": "^8.0",
-    "statamic/cms": "^4.15.0"
+    "statamic/cms": "^4.16.0"
   },
   "require-dev": {
     "pestphp/pest": "^2.9",

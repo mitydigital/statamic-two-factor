@@ -21,7 +21,8 @@ use MityDigital\StatamicTwoFactor\Support\RecoveryCode;
 use MityDigital\StatamicTwoFactor\Tests\TestCase;
 use Statamic\Facades\User;
 
-uses(TestCase::class)->in('Actions', 'Concerns', 'Fieldtypes', 'Http', 'Listeners', 'Notifications', 'Support', 'Unit');
+uses(TestCase::class)->in('Actions', 'Commands', 'Concerns', 'Fieldtypes', 'Http', 'Listeners', 'Notifications',
+    'Support', 'Unit');
 
 /*
 |--------------------------------------------------------------------------
@@ -80,6 +81,15 @@ function getCode()
     $internalProvider = app(\PragmaRX\Google2FA\Google2FA::class);
 
     return $internalProvider->getCurrentOtp($provider->getSecretKey());
+}
+
+function getPrivateProperty($className, $propertyName): ReflectionProperty
+{
+    $reflector = new ReflectionClass($className);
+    $property = $reflector->getProperty($propertyName);
+    $property->setAccessible(true);
+
+    return $property;
 }
 
 // Based on:

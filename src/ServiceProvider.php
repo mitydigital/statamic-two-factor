@@ -3,19 +3,22 @@
 namespace MityDigital\StatamicTwoFactor;
 
 use Illuminate\Contracts\Foundation\Application;
+use MityDigital\StatamicTwoFactor\Console\Commands\UpdateUserBlueprintCommand;
 use MityDigital\StatamicTwoFactor\Fieldtypes\TwoFactor as TwoFactorFieldtype;
 use MityDigital\StatamicTwoFactor\Http\Middleware\EnforceTwoFactor;
 use MityDigital\StatamicTwoFactor\Listeners\UserSavedListener;
 use MityDigital\StatamicTwoFactor\Support\Google2FA;
-use MityDigital\StatamicTwoFactor\UpdateScripts\UpdateUserBlueprint;
 use Statamic\Events\UserSaved;
-use Statamic\Facades\User;
-use Statamic\Fields\Field;
 use Statamic\Http\Controllers\CP\Auth\LoginController;
 use Statamic\Providers\AddonServiceProvider;
+use Statamic\Statamic;
 
 class ServiceProvider extends AddonServiceProvider
 {
+    protected $commands = [
+        UpdateUserBlueprintCommand::class,
+    ];
+
     protected $fieldtypes = [
         TwoFactorFieldtype::class,
     ];
@@ -34,10 +37,6 @@ class ServiceProvider extends AddonServiceProvider
 
     protected $routes = [
         'cp' => __DIR__.'/../routes/cp.php',
-    ];
-
-    protected $updateScripts = [
-        UpdateUserBlueprint::class
     ];
 
     protected $vite = [
@@ -66,5 +65,10 @@ class ServiceProvider extends AddonServiceProvider
                 'statamic-two-factor-migrations'
             );
         }
+
+        // after install
+        Statamic::afterInstalled(function ($command) {
+            $command->call('two-factor:update-user-blueprint');
+        });
     }
 }

@@ -4,7 +4,7 @@ Permission is hereby granted to any person obtaining a copy of this software (th
 merge, publish and/or distribute copies of the Software, and to permit persons to whom the Software is furnished to do
 so, subject to the following conditions:
 
-1. **Do not plagiarize.** The above copyright notice and this license shall be included in all copies or substantial
+1. **Do not plagiarise.** The above copyright notice and this license shall be included in all copies or substantial
    portions of the Software.
 
 2. **Do not use the same license on more than one project.** Each licensed copy of the Software shall be actively
@@ -14,8 +14,8 @@ so, subject to the following conditions:
    in any way, including (but not limited to) license validation, feature or edition restrictions, and update
    eligibility.
 
-4. **Not for reuse.** The Software and the propritary code therein, not limited to but including designs, components,
-   classes, and patterns, may not be resused in other projects without the express written consent of Mity Digital.
+4. **Payment is required**. Payment shall be made immediately upon receipt of any notice, prompt, reminder, or other
+   message indicating that a payment is owed.
 
 5. **Follow the law.** All use of the Software shall not violate any applicable law or regulation, nor infringe the
    rights of any other person or entity.
