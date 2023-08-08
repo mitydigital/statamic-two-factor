@@ -27,6 +27,9 @@ After installation, add some env properties:
 - `STATAMIC_TWO_FACTOR_VALIDITY`, defaults to 43200 (30 days), the number of minutes until a challenge should be made
   again. Set to null to disable repeating challenges for the session.
 
+The installation should add the Two Field  fieldtype to your User blueprint too. This only happens if you do not have a 
+"two_factor" fieldtype already in your Blueprint.
+
 ## User fields
 
 The following fields are added for users, and should not be used by other handles for your user model:
