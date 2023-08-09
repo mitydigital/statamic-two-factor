@@ -32,7 +32,7 @@ class UpdateUserBlueprintCommand extends Command
                             'display' => __('statamic-two-factor::messages.blueprint_field'),
                             'hide_display' => true,
                             'type' => 'two_factor',
-                            'listable' => false,
+                            'listable' => true,
                         ],
                     ],
                 ],
