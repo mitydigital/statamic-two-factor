@@ -1,4 +1,4 @@
-# Statamic Two Factor
+# Two Factor for Statamic
 
 <!-- statamic:hide -->
 
@@ -9,50 +9,18 @@
 
 <!-- /statamic:hide -->
 
-> A two factor addon for Statamic.
+> A two factor authentication (2FA) addon for Statamic.
 
-## Two Factor is a Commercial Addon.
+## Two Factor for Statamic is a Commercial Addon.
 
 You can use it for free while in development, but requires a license to use on a live site.
 
-Learn more or buy a license on The Statamic Marketplace!
+Learn more or buy a license on the [Statamic Marketplace](https://statamic.com/addons/mity-digital/two-factor)!
 
-## How to use
+## Documentation
 
-After installation, add some env properties:
-
-- `STATAMIC_TWO_FACTOR_ENABLED`, true or false. When true, will enforce two factor. When false, will disable (handy for
-  your dev environment)
-- `STATAMIC_TWO_FACTOR_ATTEMPTS_ALLOWED`, defaults to 5, optionally can increase. The number of attempts allowed before
-  the user is locked out of their account
-- `STATAMIC_TWO_FACTOR_VALIDITY`, defaults to 43200 (30 days), the number of minutes until a challenge should be made
-  again. Set to null to disable repeating challenges for the session.
-
-The installation should add the Two Field fieldtype to your User blueprint too. This only happens if you do not have a
-"two_factor" fieldtype already in your Blueprint.
-
-## User fields
-
-The following fields are added for users, and should not be used by other handles for your user model:
-
-- `two_factor_secret` the user's secret key
-- `two_factor_recovery_codes` stores the valid recovery codes
-- `two_factor_confirmed_at` when a successful code has been provided during setup
-- `two_factor_completed` when recovery codes have been shown during setup
-- `two_factor_locked` when a user gets locked due to exceeding failed attempts
-- `two_factor` to store a summary for the field type in Statamic
-
-## Database
-
-If you use a database, there is a migration file to run. The fields noted above are included in the migration.
-
-## Behaviour
-
-This is an all-in approach. When enabled, anyone with CP access will be governed by two factor restrictions.
-
-The "validity" period is used to re-challenge a logged in user every now and then. A POST or PATCH request (such as
-saving an entry) will not trigger this - just to make it easier to not lose work - but on their next request (such as a
-GET), they will be redirected to the challenge.
+See the [documentation](https://docs.mity.com.au/two-factor) for detailed installation, configuration and usage
+instructions.
 
 ## Security
 
