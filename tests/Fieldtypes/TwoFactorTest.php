@@ -52,7 +52,7 @@ it('correctly returns "is locked"', function () {
         ->toBeFalse();
 
     // lock the user
-    $this->user->set('two_factor_locked', true);
+    $this->user->set('two_factor_locked', true)->save();
 
     // should return true
     expect($this->user->two_factor_locked)
@@ -80,6 +80,7 @@ it('correctly returns "is setup"', function () {
         ->toBeTrue();
 
     // create a new user WITHOUT TWO FACTOR
+    $this->user->delete();
     $user = createUser();
     $request = createRequestWithParameters('statamic.cp.users.edit', [
         'user' => $user->id,
@@ -172,6 +173,7 @@ it('correctly returns "routes" for another user', function () {
     //
 
     // create a new request
+    $this->user->delete();
     $user = createUserWithTwoFactor();
     $request = createRequestWithParameters('statamic.cp.users.edit', [
         'user' => $user->id,

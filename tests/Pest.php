@@ -21,7 +21,8 @@ use MityDigital\StatamicTwoFactor\Support\RecoveryCode;
 use MityDigital\StatamicTwoFactor\Tests\TestCase;
 use Statamic\Facades\User;
 
-uses(TestCase::class)->in('Actions', 'Commands', 'Concerns', 'Fieldtypes', 'Http', 'Listeners', 'Notifications',
+uses(TestCase::class)->in('Actions', 'Commands', 'Concerns',
+    'Fieldtypes', 'Http', 'Listeners', 'Notifications',
     'Support', 'Unit');
 
 /*
@@ -46,16 +47,17 @@ uses(TestCase::class)->in('Actions', 'Commands', 'Concerns', 'Fieldtypes', 'Http
 |
 */
 
-function createUser(): Statamic\Auth\File\User
+function createUser(): Statamic\Auth\File\User|\Statamic\Auth\Eloquent\User
 {
     return User::make()
         ->makeSuper()
+        ->set('name', 'Peter Parker')
         ->email('peter.parker@spiderman.com')
         ->set('password', 'secret')
         ->save();
 }
 
-function createUserWithTwoFactor(): Statamic\Auth\File\User
+function createUserWithTwoFactor(): Statamic\Auth\File\User|\Statamic\Auth\Eloquent\User
 {
     $user = createUser();
 
@@ -138,7 +140,7 @@ function trackActions(array $actions): void
                 ->makePartial()
                 ->shouldReceive('__invoke')
                 ->times($times)
-                ->andReturnUsing(fn (...$args) => $real(...$args))
+                ->andReturnUsing(fn(...$args) => $real(...$args))
                 ->globally()
                 ->ordered();
         }

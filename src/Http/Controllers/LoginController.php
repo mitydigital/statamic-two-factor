@@ -3,25 +3,19 @@
 namespace MityDigital\StatamicTwoFactor\Http\Controllers;
 
 use Illuminate\Http\Request;
+use MityDigital\StatamicTwoFactor\Facades\StatamicTwoFactorUser;
 use Statamic\Facades\User;
 
 class LoginController extends \Statamic\Http\Controllers\CP\Auth\LoginController
 {
-    /*protected function attemptLogin(Request $request)
+    public function logout(Request $request)
     {
-        // log in
-        $loggedIn = parent::attemptLogin($request);
+        // remove the last challenged
+        StatamicTwoFactorUser::clearLastChallenged();
 
-        // if we are logged in, is the user two-factor locked?
-        if ($loggedIn && config('statamic-two-factor.enabled', false)) {
-            // if the user has been locked, show the locked view
-            if (User::current()->two_factor_locked) {
-                return redirect(cp_route('statamic-two-factor.locked'));
-            }
-        }
-
-        return $loggedIn;
-    }*/
+        // log out
+        return parent::logout($request);
+    }
 
     protected function authenticated(Request $request, $user)
     {

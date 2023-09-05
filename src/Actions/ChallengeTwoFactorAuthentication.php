@@ -5,6 +5,7 @@ namespace MityDigital\StatamicTwoFactor\Actions;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use MityDigital\StatamicTwoFactor\Exceptions\InvalidChallengeModeException;
+use MityDigital\StatamicTwoFactor\Facades\StatamicTwoFactorUser;
 use MityDigital\StatamicTwoFactor\Notifications\RecoveryCodeUsedNotification;
 use MityDigital\StatamicTwoFactor\Support\Google2FA;
 use MityDigital\StatamicTwoFactor\Support\RecoveryCode;
@@ -34,13 +35,13 @@ class ChallengeTwoFactorAuthentication
         $this->{Str::camel('challenge_'.$mode)}($user, $code);
 
         // save session
-        session()->put('statamic_two_factor', encrypt(now()));
+        StatamicTwoFactorUser::setLastChallenged();
     }
 
     protected function challengeCode(User $user, ?string $code): void
     {
         if (empty($code) ||
-            ! $this->provider->verify(decrypt($user->two_factor_secret), $code)) {
+            !$this->provider->verify(decrypt($user->two_factor_secret), $code)) {
             throw ValidationException::withMessages([
                 'code' => [__('statamic-two-factor::messages.code_challenge_failed')],
             ])->redirectTo(cp_route('statamic-two-factor.challenge'));
@@ -50,7 +51,7 @@ class ChallengeTwoFactorAuthentication
     protected function challengeRecoveryCode(User $user, ?string $recovery_code): void
     {
         // must have a code
-        if (! $recovery_code ||
+        if (!$recovery_code ||
             empty($recovery_code)) {
             throw ValidationException::withMessages([
                 'recovery_code' => [__('statamic-two-factor::messages.recovery_code_challenge_failed')],
@@ -61,10 +62,10 @@ class ChallengeTwoFactorAuthentication
         $userRecoveryCodes = collect(json_decode(decrypt($user->two_factor_recovery_codes), true));
 
         // find the recovery code
-        $foundRecoveryCode = $userRecoveryCodes->first(fn ($code) => hash_equals($code, $recovery_code) ? $code : null);
+        $foundRecoveryCode = $userRecoveryCodes->first(fn($code) => hash_equals($code, $recovery_code) ? $code : null);
 
         // are we valid?
-        if (! $foundRecoveryCode) {
+        if (!$foundRecoveryCode) {
             throw ValidationException::withMessages([
                 'recovery_code' => [__('statamic-two-factor::messages.recovery_code_challenge_failed')],
             ]);

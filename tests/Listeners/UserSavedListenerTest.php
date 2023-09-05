@@ -73,7 +73,7 @@ it('correctly updates the "two factor" summary for the user', function () {
         ]);
 
     // unlock
-    $this->user->set('two_factor_locked', null)
+    $this->user->set('two_factor_locked', false)
         ->save();
 
     expect($this->user->two_factor)

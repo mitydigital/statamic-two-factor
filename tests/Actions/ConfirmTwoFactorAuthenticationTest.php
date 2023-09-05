@@ -3,6 +3,7 @@
 use Illuminate\Support\Collection;
 use Illuminate\Validation\ValidationException;
 use MityDigital\StatamicTwoFactor\Actions\ConfirmTwoFactorAuthentication;
+use MityDigital\StatamicTwoFactor\Facades\StatamicTwoFactorUser;
 use MityDigital\StatamicTwoFactor\Support\Google2FA;
 use MityDigital\StatamicTwoFactor\Support\RecoveryCode;
 use function Spatie\PestPluginTestTime\testTime;
@@ -71,8 +72,8 @@ it('correctly confirms two factor authentication', function () {
         ->toEqual(now());
 
     // expect new session var
-    $session = decrypt(session()->get('statamic_two_factor'));
-    expect($session)
+    $lastChallenged = StatamicTwoFactorUser::getLastChallenged($this->user);
+    expect($lastChallenged)
         ->not()->toBeNull()
         ->toEqual(now());
 });

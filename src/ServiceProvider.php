@@ -8,6 +8,7 @@ use MityDigital\StatamicTwoFactor\Fieldtypes\TwoFactor as TwoFactorFieldtype;
 use MityDigital\StatamicTwoFactor\Http\Middleware\EnforceTwoFactor;
 use MityDigital\StatamicTwoFactor\Listeners\UserSavedListener;
 use MityDigital\StatamicTwoFactor\Support\Google2FA;
+use MityDigital\StatamicTwoFactor\Support\StatamicTwoFactorUser;
 use Statamic\Events\UserSaved;
 use Statamic\Http\Controllers\CP\Auth\LoginController;
 use Statamic\Providers\AddonServiceProvider;
@@ -49,6 +50,11 @@ class ServiceProvider extends AddonServiceProvider
 
     public function bootAddon()
     {
+        $this->app->bind('statamicTwoFactorUser', function ($app) {
+            return new StatamicTwoFactorUser();
+        });
+        $this->app->alias(StatamicTwoFactorUser::class, 'statamicTwoFactorUser');
+
         $this->app->singleton(Google2FA::class, function (Application $app) {
             return new Google2FA();
         });

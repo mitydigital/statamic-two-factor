@@ -35,7 +35,7 @@ class TwoFactor extends Fieldtype
                 $user_id = $route->parameter('user', null);
 
                 // is it me?
-                if ($user_id === User::current()->id) {
+                if ($user_id == User::current()->id) {
                     $isMe = true;
                 }
 

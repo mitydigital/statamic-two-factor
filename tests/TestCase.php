@@ -26,6 +26,8 @@ abstract class TestCase extends OrchestraTestCase
             Version::shouldReceive('get')
                 ->andReturn(Composer::create(__DIR__.'/../')->installedVersion(Statamic::PACKAGE));
         }
+
+        $this->loadMigrationsFrom(__DIR__.'/__migrations__');
     }
 
     protected function getPackageProviders($app)
@@ -78,21 +80,25 @@ abstract class TestCase extends OrchestraTestCase
         }
 
         $app['config']->set('app.key', 'base64:'.base64_encode(
-            Encrypter::generateKey($app['config']['app.cipher'])
-        ));
+                Encrypter::generateKey($app['config']['app.cipher'])
+            ));
 
-        $app['config']->set('auth.providers.users.driver', 'statamic');
-        $app['config']->set('statamic.users.repository', 'file');
+        if (env('TWO_FACTOR_USER_MODE', 'file') === 'eloquent') {
+            $app['config']->set('auth.providers.users.driver', 'eloquent');
+            $app['config']->set('statamic.users.repository', 'eloquent');
+        } else {
+            $app['config']->set('auth.providers.users.driver', 'statamic');
+            $app['config']->set('statamic.users.repository', 'file');
 
-        $app['config']->set('statamic.stache.stores.users', [
-            'class' => UsersStore::class,
-            'directory' => __DIR__.'/__fixtures__/users',
-        ]);
+            $app['config']->set('statamic.stache.stores.users', [
+                'class' => UsersStore::class,
+                'directory' => __DIR__.'/__fixtures__/users',
+            ]);
+        }
 
         $app['config']->set('statamic.editions.pro', true);
 
         $app['config']->set('statamic-two-factor.enabled', true);
         $app['config']->set('statamic-two-factor.attempts', 3);
-
     }
 }

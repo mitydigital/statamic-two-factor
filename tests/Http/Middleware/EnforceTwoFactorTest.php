@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use MityDigital\StatamicTwoFactor\Facades\StatamicTwoFactorUser;
 use MityDigital\StatamicTwoFactor\Http\Middleware\EnforceTwoFactor;
 use function Pest\Laravel\get;
 use function Pest\Laravel\post;
@@ -10,9 +11,11 @@ it('moves to the next middleware when two factor is disabled', function () {
     // disable
     config()->set('statamic-two-factor.enabled', false);
 
+    $this->actingAs(createUserWithTwoFactor());
+
     // create the request
     $request = Request::create(cp_route('index'));
-    $request->setUserResolver(fn () => createUser());
+    $request->setUserResolver(fn() => createUser());
 
     $middleware = new EnforceTwoFactor();
 
@@ -27,7 +30,7 @@ it('moves to the next middleware when two factor is disabled', function () {
 
     // create the request
     $request = Request::create(cp_route('index'));
-    $request->setUserResolver(fn () => createUser());
+    $request->setUserResolver(fn() => createUser());
 
     $middleware = new EnforceTwoFactor();
 
@@ -39,8 +42,11 @@ it('moves to the next middleware when two factor is disabled', function () {
 });
 
 it('redirects to the setup route when two factor setup is not completed', function () {
+    $user = createUser();
+    $this->actingAs($user);
+
     $request = Request::create(cp_route('index'));
-    $request->setUserResolver(fn () => createUser());
+    $request->setUserResolver(fn() => $user);
 
     $middleware = new EnforceTwoFactor();
 
@@ -75,7 +81,7 @@ it('redirects to the challenge when validity is enabled and there is no recent c
         testTime()->freeze();
 
         // force a "challenge" variable (i.e. fake it)
-        session()->put('statamic_two_factor', encrypt(now()));
+        StatamicTwoFactorUser::setLastChallenged($user);
 
         // try to go to the route
         $response = get(cp_route('collections.index'));
@@ -111,7 +117,8 @@ it('redirects to the challenge when validity is disabled and there is no recent 
     config()->set('statamic-two-factor.validity', null);
 
     // act as a user with two factor set up
-    $this->actingAs(createUserWithTwoFactor());
+    $user = createUserWithTwoFactor();
+    $this->actingAs($user);
 
     $response = get(cp_route('collections.index'));
 
@@ -125,7 +132,7 @@ it('redirects to the challenge when validity is disabled and there is no recent 
     testTime()->freeze();
 
     // force a "challenge" variable (i.e. fake it)
-    session()->put('statamic_two_factor', encrypt(now()));
+    StatamicTwoFactorUser::setLastChallenged($user);
 
     // skip forward 5 minutes
     testTime()->addMinutes(5);

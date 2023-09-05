@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use MityDigital\StatamicTwoFactor\Facades\StatamicTwoFactorUser;
 
 class EnforceTwoFactor
 {
@@ -15,23 +16,16 @@ class EnforceTwoFactor
         // we only need to do any further checks if two factor is enabled
         if (config('statamic-two-factor.enabled')) {
             // get the user
-            $user = $request->user();
+            $user = StatamicTwoFactorUser::get();
 
             // is two factor NOT set up?
-            if (! $user->two_factor_completed) {
+            if (!$user->two_factor_completed) {
                 // go to setup
                 return redirect(cp_route('statamic-two-factor.setup'));
             }
 
-            // should we do a challenge?
-            $challengeNow = false;
-
             // when were we last challenged?
-            $lastChallenge = $request->session()->get('statamic_two_factor', false);
-            if ($lastChallenge) {
-                // decrypt it
-                $lastChallenge = decrypt($lastChallenge);
-            }
+            $lastChallenge = StatamicTwoFactorUser::getLastChallenged();
 
             // do we use validity?
             // if so, we need to check if we have a challenge, and if it hasn't expired
@@ -45,18 +39,18 @@ class EnforceTwoFactor
                 // Ultimately, it probably doesn't matter if the challenge is a bit longer than the "validity" minutes
                 // as it doesn't need to be *exact* but at least reminding them roughly after that time in a non-
                 // obtrusive way for their workflow is a happy approach.
-                if (! in_array(strtoupper($request->method()), ['PATCH', 'POST']) &&
-                    ! Str::startsWith($request->path(), config('statamic.cp.route').'/preferences/js')) {
+                if (!in_array(strtoupper($request->method()), ['PATCH', 'POST']) &&
+                    !Str::startsWith($request->path(), config('statamic.cp.route').'/preferences/js')) {
 
-                    // if we have no challenge token, it it has expired
-                    if (! $lastChallenge || Carbon::parse($lastChallenge)->addMinutes(config('statamic-two-factor.validity'))->isPast()) {
+                    // if we have no challenge token, it has expired
+                    if (!$lastChallenge || Carbon::parse($lastChallenge)->addMinutes(config('statamic-two-factor.validity'))->isPast()) {
                         // not yet challenged, or expired, so yes, let's challenge
                         return redirect(cp_route('statamic-two-factor.challenge'));
                     }
                 }
             } else {
                 // we don't care about expiry dates - we just need to know if we have been challenged at all
-                if (! $lastChallenge) {
+                if (!$lastChallenge) {
                     return redirect(cp_route('statamic-two-factor.challenge'));
                 }
             }

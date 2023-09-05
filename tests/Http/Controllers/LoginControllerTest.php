@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\URL;
+use MityDigital\StatamicTwoFactor\Facades\StatamicTwoFactorUser;
 
 beforeEach(function () {
     // create the user, and lock them
@@ -13,6 +14,8 @@ beforeEach(function () {
 });
 
 it('shows the locked view when the user has logged in, and they are locked', function () {
+
+    $this->withoutExceptionHandling();
 
     $this->post(URL::to('cp/auth/login'), [
         'email' => $this->user->email(),
@@ -44,4 +47,21 @@ it('does not show the locked view when two factor as an addon is disabled', func
         'password' => 'secret',
     ])
         ->assertRedirect(cp_route('index'));
+});
+
+it('clears the last challenged variable when logged out', function () {
+    // log in
+    $this->actingAs($this->user);
+
+    // set as challenged
+    StatamicTwoFactorUser::setLastChallenged();
+
+    // should have a value
+    expect(StatamicTwoFactorUser::getLastChallenged())->not()->toBeNull();
+
+    // logout
+    $this->get(route('statamic.logout'), [])->assertRedirect();
+
+    // should have be cleared
+    expect(StatamicTwoFactorUser::getLastChallenged())->toBeNull();
 });

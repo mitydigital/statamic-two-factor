@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
 use MityDigital\StatamicTwoFactor\Actions\ChallengeTwoFactorAuthentication;
 use MityDigital\StatamicTwoFactor\Exceptions\InvalidChallengeModeException;
+use MityDigital\StatamicTwoFactor\Facades\StatamicTwoFactorUser;
 use MityDigital\StatamicTwoFactor\Notifications\RecoveryCodeUsedNotification;
 use MityDigital\StatamicTwoFactor\Support\Google2FA;
 use function Spatie\PestPluginTestTime\testTime;
@@ -64,14 +65,14 @@ it('correctly accepts a one time code challenge', function () {
     $code = getCode();
 
     // expect no session var
-    expect(session()->get('statamic_two_factor'))
+    expect(StatamicTwoFactorUser::getLastChallenged($this->user))
         ->toBeNull();
 
     $this->action->__invoke($this->user, 'code', $code);
 
-    // expect new session var
-    $session = decrypt(session()->get('statamic_two_factor'));
-    expect($session)
+    // expect new last challenged var
+    $lastChallenged = StatamicTwoFactorUser::getLastChallenged($this->user);
+    expect($lastChallenged)
         ->not()->toBeNull()
         ->toEqual(now());
 });
@@ -92,7 +93,7 @@ it('correctly accepts a recovery code challenge', function () {
     testTime()->freeze();
 
     // expect no session var
-    expect(session()->get('statamic_two_factor'))
+    expect(StatamicTwoFactorUser::getLastChallenged($this->user))
         ->toBeNull();
 
     // get a recovery code from the user
@@ -101,9 +102,9 @@ it('correctly accepts a recovery code challenge', function () {
     // do it
     $this->action->__invoke($this->user, 'recovery_code', $userRecoveryCode);
 
-    // expect new session var
-    $session = decrypt(session()->get('statamic_two_factor'));
-    expect($session)
+    // expect new last challenged var
+    $lastChallenged = StatamicTwoFactorUser::getLastChallenged($this->user);
+    expect($lastChallenged)
         ->not()->toBeNull()
         ->toEqual(now());
 });
@@ -130,8 +131,8 @@ it('removes and replaces the used recovery code on a successful usage', function
 
     // others remain
     $userRecoveryCodes
-        ->filter(fn ($code) => $code != $userRecoveryCode)
-        ->each(fn ($code) => expect($newUserRecoveryCodes)->toContain($code));
+        ->filter(fn($code) => $code != $userRecoveryCode)
+        ->each(fn($code) => expect($newUserRecoveryCodes)->toContain($code));
 });
 
 it('sends the recovery code used notification when a recovery code is successfully used', function () {
