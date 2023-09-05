@@ -22,6 +22,12 @@ Learn more or buy a license on the [Statamic Marketplace](https://statamic.com/a
 See the [documentation](https://docs.mity.com.au/two-factor) for detailed installation, configuration and usage
 instructions.
 
+## Testing
+
+```bash
+composer test
+```
+
 ## Security
 
 Security related issues should be emailed to [dev@mity.com.au](mailto:dev@mity.com.au) instead of logging an issue.
