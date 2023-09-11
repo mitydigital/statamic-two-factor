@@ -14,7 +14,7 @@ return new class extends Migration
             $table->timestamp('two_factor_confirmed_at')->after('two_factor_recovery_codes')->nullable();
             $table->timestamp('two_factor_completed')->after('two_factor_confirmed_at')->nullable();
             $table->boolean('two_factor_locked')->after('two_factor_completed')->default(false);
-            $table->string('two_factor_last_challenged', 100)->nullable();
+            $table->text('two_factor_last_challenged')->nullable();
             $table->json('two_factor')->after('two_factor_locked')->nullable();
         });
     }
