@@ -15,7 +15,7 @@
   },
   "extra": {
     "statamic": {
-      "name": "Statamic Two Factor",
+      "name": "Two Factor for Statamic",
       "description": "Two Factor Authentication for Statamic 4"
     },
     "laravel": {
