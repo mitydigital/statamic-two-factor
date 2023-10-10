@@ -1,6 +1,7 @@
 <?php
 
 use MityDigital\StatamicTwoFactor\Actions\CompleteTwoFactorAuthenticationSetup;
+
 use function Spatie\PestPluginTestTime\testTime;
 
 beforeEach(function () {

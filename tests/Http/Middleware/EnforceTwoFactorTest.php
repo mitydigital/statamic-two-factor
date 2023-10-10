@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use MityDigital\StatamicTwoFactor\Facades\StatamicTwoFactorUser;
 use MityDigital\StatamicTwoFactor\Http\Middleware\EnforceTwoFactor;
+
 use function Pest\Laravel\get;
 use function Pest\Laravel\post;
 use function Spatie\PestPluginTestTime\testTime;
@@ -15,7 +16,7 @@ it('moves to the next middleware when two factor is disabled', function () {
 
     // create the request
     $request = Request::create(cp_route('index'));
-    $request->setUserResolver(fn() => createUser());
+    $request->setUserResolver(fn () => createUser());
 
     $middleware = new EnforceTwoFactor();
 
@@ -30,7 +31,7 @@ it('moves to the next middleware when two factor is disabled', function () {
 
     // create the request
     $request = Request::create(cp_route('index'));
-    $request->setUserResolver(fn() => createUser());
+    $request->setUserResolver(fn () => createUser());
 
     $middleware = new EnforceTwoFactor();
 
@@ -46,7 +47,7 @@ it('redirects to the setup route when two factor setup is not completed', functi
     $this->actingAs($user);
 
     $request = Request::create(cp_route('index'));
-    $request->setUserResolver(fn() => $user);
+    $request->setUserResolver(fn () => $user);
 
     $middleware = new EnforceTwoFactor();
 

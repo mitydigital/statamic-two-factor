@@ -15,7 +15,7 @@ class StatamicTwoFactorUser
         $lastChallenged = null;
 
         // no user, return
-        if (!$user) {
+        if (! $user) {
             return $lastChallenged;
         }
 
@@ -44,7 +44,7 @@ class StatamicTwoFactorUser
         // get the user
         $user = $this->get();
 
-        if (!$user) {
+        if (! $user) {
             return $this;
         }
 
@@ -64,7 +64,7 @@ class StatamicTwoFactorUser
         // get the user
         $user = $this->get();
 
-        if (!$user) {
+        if (! $user) {
             return $this;
         }
 

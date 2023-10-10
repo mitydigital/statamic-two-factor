@@ -6,6 +6,7 @@ use MityDigital\StatamicTwoFactor\Actions\ConfirmTwoFactorAuthentication;
 use MityDigital\StatamicTwoFactor\Facades\StatamicTwoFactorUser;
 use MityDigital\StatamicTwoFactor\Support\Google2FA;
 use MityDigital\StatamicTwoFactor\Support\RecoveryCode;
+
 use function Spatie\PestPluginTestTime\testTime;
 
 beforeEach(function () {

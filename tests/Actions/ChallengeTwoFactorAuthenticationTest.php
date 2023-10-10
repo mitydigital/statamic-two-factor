@@ -7,6 +7,7 @@ use MityDigital\StatamicTwoFactor\Exceptions\InvalidChallengeModeException;
 use MityDigital\StatamicTwoFactor\Facades\StatamicTwoFactorUser;
 use MityDigital\StatamicTwoFactor\Notifications\RecoveryCodeUsedNotification;
 use MityDigital\StatamicTwoFactor\Support\Google2FA;
+
 use function Spatie\PestPluginTestTime\testTime;
 
 beforeEach(function () {
@@ -131,8 +132,8 @@ it('removes and replaces the used recovery code on a successful usage', function
 
     // others remain
     $userRecoveryCodes
-        ->filter(fn($code) => $code != $userRecoveryCode)
-        ->each(fn($code) => expect($newUserRecoveryCodes)->toContain($code));
+        ->filter(fn ($code) => $code != $userRecoveryCode)
+        ->each(fn ($code) => expect($newUserRecoveryCodes)->toContain($code));
 });
 
 it('sends the recovery code used notification when a recovery code is successfully used', function () {

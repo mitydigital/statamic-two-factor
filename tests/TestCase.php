@@ -80,8 +80,8 @@ abstract class TestCase extends OrchestraTestCase
         }
 
         $app['config']->set('app.key', 'base64:'.base64_encode(
-                Encrypter::generateKey($app['config']['app.cipher'])
-            ));
+            Encrypter::generateKey($app['config']['app.cipher'])
+        ));
 
         if (env('TWO_FACTOR_USER_MODE', 'file') === 'eloquent') {
             $app['config']->set('auth.providers.users.driver', 'eloquent');

@@ -47,7 +47,7 @@ uses(TestCase::class)->in('Actions', 'Commands', 'Concerns',
 |
 */
 
-function createUser(): Statamic\Auth\File\User|\Statamic\Auth\Eloquent\User
+function createUser(): Statamic\Auth\File\User|Statamic\Auth\Eloquent\User
 {
     return User::make()
         ->makeSuper()
@@ -57,7 +57,7 @@ function createUser(): Statamic\Auth\File\User|\Statamic\Auth\Eloquent\User
         ->save();
 }
 
-function createUserWithTwoFactor(): Statamic\Auth\File\User|\Statamic\Auth\Eloquent\User
+function createUserWithTwoFactor(): Statamic\Auth\File\User|Statamic\Auth\Eloquent\User
 {
     $user = createUser();
 
@@ -140,7 +140,7 @@ function trackActions(array $actions): void
                 ->makePartial()
                 ->shouldReceive('__invoke')
                 ->times($times)
-                ->andReturnUsing(fn(...$args) => $real(...$args))
+                ->andReturnUsing(fn (...$args) => $real(...$args))
                 ->globally()
                 ->ordered();
         }
