@@ -44,14 +44,14 @@
                                     @if($mode === 'recovery_code') x-cloak @endif
                                     x-on:click.prevent="mode = 'recovery_code'; code = ''"
                                     x-show="mode === 'code'">
-                                Use recovery code
+                                {{ __('statamic-two-factor::challenge.recovery_code_use') }}
                             </button>
 
                             <button class="text-xs text-btn"
                                     @if($mode === 'code') x-cloak @endif
                                     x-on:click.prevent="mode = 'code'; recovery_code = ''"
                                     x-show="mode === 'recovery_code'">
-                                Use one-time code
+                                {{ __('statamic-two-factor::challenge.code_use') }}
                             </button>
 
                             <button type="submit" class="btn-primary">{{ __('statamic-two-factor::challenge.action') }}</button>
