@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-nowrap space-x-4">
-        <div v-if="value.setup"
+        <div v-if="status.setup"
              class="flex flex-nowrap">
             <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 512 512"
                  xmlns="http://www.w3.org/2000/svg">
@@ -9,7 +9,7 @@
             </svg>
             <span class="ml-1">{{ __('statamic-two-factor::fieldtype.status.set_up') }}</span>
         </div>
-        
+
         <div v-else
              class="flex flex-nowrap">
             <svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 512 512"
@@ -20,7 +20,7 @@
             <span class="ml-1">{{ __('statamic-two-factor::fieldtype.status.not_set_up') }}</span>
         </div>
 
-        <div v-if="value.locked"
+        <div v-if="status.locked"
              class="flex flex-nowrap">
             <svg class="w-5 h-5 text-orange" fill="currentColor" viewBox="0 0 24 24"
                  xmlns="http://www.w3.org/2000/svg">
@@ -37,6 +37,14 @@
 <script>
 export default {
     mixins: [IndexFieldtype],
-    computed: {}
+    computed: {
+        status() {
+            try {
+                return JSON.parse(this.value);
+            } catch (e) {
+                return this.value;
+            }
+        }
+    }
 }
 </script>
