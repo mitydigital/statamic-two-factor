@@ -7,7 +7,7 @@ return [
 
     'recovery_code_challenge_failed' => 'Der angegebene Wiederherstellungscode ist ungültig.',
 
-    'recovery_codes_updated' => "Dieser Code wurde verwendet und durch einen neuen Code ersetzt. Vergiss nicht die Wiederherstellungscodes erneut an einem sicheren Ort abzuspeichern.",
+    'recovery_codes_updated' => 'Dieser Code wurde verwendet und durch einen neuen Code ersetzt. Vergiss nicht die Wiederherstellungscodes erneut an einem sicheren Ort abzuspeichern.',
 
     'recovery_code_used_greeting' => 'Ahoi :name,',
     'recovery_code_used_subject' => 'Wiederherstellungscode für Konto verwendet',
