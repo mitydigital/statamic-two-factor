@@ -40,7 +40,7 @@ class UserRecoveryCodesController extends BaseController
 
         // success
         return [
-            'recovery_codes' => json_decode(decrypt(User::current()->two_factor_recovery_codes), true),
+            'recovery_codes' => json_decode(decrypt($user->two_factor_recovery_codes), true),
         ];
     }
 }

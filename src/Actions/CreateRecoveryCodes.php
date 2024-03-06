@@ -14,6 +14,7 @@ class CreateRecoveryCodes
         $recoveryCodes = Collection::times(8, function () {
             return RecoveryCode::generate();
         })->all();
+
         $user->set('two_factor_recovery_codes', encrypt(json_encode($recoveryCodes)));
         $user->save();
     }
