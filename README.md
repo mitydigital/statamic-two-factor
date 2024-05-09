@@ -2,7 +2,7 @@
 
 <!-- statamic:hide -->
 
-![Statamic 4+](https://img.shields.io/badge/Statamic-4+-FF269E?style=for-the-badge&link=https://statamic.com)
+![Statamic 5+](https://img.shields.io/badge/Statamic-5+-FF269E?style=for-the-badge&link=https://statamic.com)
 [![Statamic Two Factor on Packagist](https://img.shields.io/packagist/v/mitydigital/statamic-two-factor?style=for-the-badge)](https://packagist.org/packages/mitydigital/statamic-two-factor/stats)
 
 ---

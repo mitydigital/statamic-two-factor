@@ -3,6 +3,7 @@
 use MityDigital\StatamicTwoFactor\Actions\CreateRecoveryCodes;
 use MityDigital\StatamicTwoFactor\Http\Controllers\UserRecoveryCodesController;
 use MityDigital\StatamicTwoFactor\Http\Middleware\EnforceTwoFactor;
+use Statamic\Facades\User;
 
 beforeEach(function () {
     $this->admin = createUserWithTwoFactor();
@@ -49,11 +50,16 @@ it('uses the create recovery codes action', function () {
     ]);
 
     // works on yourself only
-    $this->post(action([UserRecoveryCodesController::class, 'store'], [
+    $response = $this->post(action([UserRecoveryCodesController::class, 'store'], [
         'user' => $this->admin->id,
     ]))
-        ->assertStatus(200)
-        ->assertJson([
-            'recovery_codes' => json_decode(decrypt($this->admin->two_factor_recovery_codes), true),
+        ->assertStatus(200);
+
+    // reload the user
+    $admin = User::find($this->admin->id);
+
+    expect($response->json())->toBeArray()
+        ->toMatchArray([
+            'recovery_codes' => json_decode(decrypt($admin->two_factor_recovery_codes), true),
         ]);
 });

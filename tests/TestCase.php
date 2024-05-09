@@ -5,22 +5,26 @@ namespace MityDigital\StatamicTwoFactor\Tests;
 use Facades\Statamic\Version;
 use Illuminate\Encryption\Encrypter;
 use MityDigital\StatamicTwoFactor\ServiceProvider;
-use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Statamic\Console\Processes\Composer;
-use Statamic\Extend\Manifest;
-use Statamic\Providers\StatamicServiceProvider;
 use Statamic\Stache\Stores\UsersStore;
 use Statamic\Statamic;
+use Statamic\Testing\AddonTestCase;
 
-abstract class TestCase extends OrchestraTestCase
+abstract class TestCase extends AddonTestCase
 {
+    public static $migrationsGenerated = false;
+
     protected $shouldFakeVersion = true;
+
+    protected string $addonServiceProvider = ServiceProvider::class;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->withoutVite();
+        if (env('TWO_FACTOR_USER_MODE', 'file') === 'eloquent') {
+            config(['statamic.users.repository' => 'eloquent']);
+        }
 
         if ($this->shouldFakeVersion) {
             Version::shouldReceive('get')
@@ -30,31 +34,9 @@ abstract class TestCase extends OrchestraTestCase
         $this->loadMigrationsFrom(__DIR__.'/__migrations__');
     }
 
-    protected function getPackageProviders($app)
-    {
-        return [
-            StatamicServiceProvider::class,
-            ServiceProvider::class,
-        ];
-    }
-
-    protected function getPackageAliases($app)
-    {
-        return [
-            'Statamic' => Statamic::class,
-        ];
-    }
-
     protected function getEnvironmentSetUp($app)
     {
         parent::getEnvironmentSetUp($app);
-
-        $app->make(Manifest::class)->manifest = [
-            'mitydigital/statamic-two-factor' => [
-                'id' => 'mitydigital/statamic-two-factor',
-                'namespace' => 'MityDigital\\StatamicTwoFactor',
-            ],
-        ];
     }
 
     protected function resolveApplicationConfiguration($app)
@@ -66,7 +48,6 @@ abstract class TestCase extends OrchestraTestCase
             'cp',
             'forms',
             'static_caching',
-            'sites',
             'stache',
             'system',
             'users',
@@ -75,7 +56,7 @@ abstract class TestCase extends OrchestraTestCase
         foreach ($configs as $config) {
             $app['config']->set(
                 "statamic.$config",
-                require(__DIR__."/../vendor/statamic/cms/config/{$config}.php")
+                require (__DIR__."/../vendor/statamic/cms/config/{$config}.php")
             );
         }
 
@@ -85,7 +66,6 @@ abstract class TestCase extends OrchestraTestCase
 
         if (env('TWO_FACTOR_USER_MODE', 'file') === 'eloquent') {
             $app['config']->set('auth.providers.users.driver', 'eloquent');
-            $app['config']->set('statamic.users.repository', 'eloquent');
         } else {
             $app['config']->set('auth.providers.users.driver', 'statamic');
             $app['config']->set('statamic.users.repository', 'file');
@@ -100,5 +80,6 @@ abstract class TestCase extends OrchestraTestCase
 
         $app['config']->set('statamic-two-factor.enabled', true);
         $app['config']->set('statamic-two-factor.attempts', 3);
+
     }
 }
