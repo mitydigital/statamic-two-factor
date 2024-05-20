@@ -11,11 +11,11 @@
                  x-data="{ mode: '{{ $mode }}', code: '', recovery_code: '' }">
 
                 <div class="pb-4 mb-2 text-center">
-                    <h1 class="mb-4 text-lg text-gray-800">{{ __('statamic-two-factor::challenge.title') }}</h1>
+                    <h1 class="mb-4 text-lg text-gray-800 dark:text-dark-175">{{ __('statamic-two-factor::challenge.title') }}</h1>
                     <p @if($mode === 'recovery_code') x-cloak @endif x-show="mode === 'code'"
-                       class="text-sm text-gray">{{ __('statamic-two-factor::challenge.code_introduction') }}</p>
+                       class="text-sm text-gray dark:text-dark-175">{{ __('statamic-two-factor::challenge.code_introduction') }}</p>
                     <p @if($mode === 'code') x-cloak @endif x-show="mode === 'recovery_code'"
-                       class="text-sm text-gray">{{ __('statamic-two-factor::challenge.recovery_code_introduction') }}</p>
+                       class="text-sm text-gray dark:text-dark-175">{{ __('statamic-two-factor::challenge.recovery_code_introduction') }}</p>
                 </div>
 
                 <div>
@@ -71,8 +71,8 @@
                 </div>
             </div>
 
-            <div class="mt-4 text-xs text-center">
-                <a class="logout"
+            <div class="mt-4 text-sm text-center">
+                <a class="logout opacity-75 hover:opacity-100"
                    href="{{ cp_route('logout') }}?redirect={{ cp_route('login') }}">{{ __('statamic-two-factor::actions.logout') }}</a>
             </div>
         </div>

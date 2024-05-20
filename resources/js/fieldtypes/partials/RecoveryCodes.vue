@@ -8,13 +8,15 @@
 
             <div class="sm:flex -mt-2">
                 <button :disabled="codes"
-                        @click.prevent="show"
-                        class="btn mt-2 mr-2">{{ __('statamic-two-factor::profile.recovery_codes.show.action') }}</button>
-                <button @click.prevent="confirming = true"
-                        class="btn mt-2">{{ __('statamic-two-factor::profile.recovery_codes.regenerate.action') }}</button>
+                        class="btn mt-2 mr-2"
+                        @click.prevent="show">{{ __('statamic-two-factor::profile.recovery_codes.show.action') }}
+                </button>
+                <button class="btn mt-2"
+                        @click.prevent="confirming = true">{{ __('statamic-two-factor::profile.recovery_codes.regenerate.action') }}
+                </button>
             </div>
 
-            <div v-if="codes" class="bg-gray-200 inline-block rounded-lg px-4 py-4 mt-6">
+            <div v-if="codes" class="bg-gray-200 dark:bg-dark-650 inline-block rounded-lg px-4 py-4 mt-6">
                 <div class="px-2 text-sm font-medium mb-2">
                     <span v-if="newCodes">{{ __('statamic-two-factor::profile.recovery_codes.codes.new') }}:</span>
                     <span v-else>{{ __('statamic-two-factor::profile.recovery_codes.codes.show') }}:</span>
@@ -23,16 +25,18 @@
                     <div v-for="(code, index) in codes" :key="code" class="px-2">{{ code }}</div>
                 </div>
                 <div v-if="newCodes"
-                     class="text-sm mt-2 px-2 text-red-500">{{ __('statamic-two-factor::profile.recovery_codes.codes.footnote') }}</div>
+                     class="text-sm mt-2 px-2 text-red-500">
+                    {{ __('statamic-two-factor::profile.recovery_codes.codes.footnote') }}
+                </div>
             </div>
         </div>
 
         <confirmation-modal
             v-if="confirming"
-            :title="__('statamic-two-factor::profile.recovery_codes.regenerate.confirm.title')"
             :danger="true"
-            @confirm="regenerate"
+            :title="__('statamic-two-factor::profile.recovery_codes.regenerate.confirm.title')"
             @cancel="confirming = false"
+            @confirm="regenerate"
         >
             <p class="mb-2">{{ __('statamic-two-factor::profile.recovery_codes.regenerate.confirm.body_1') }}</p>
             <p>{{ __('statamic-two-factor::profile.recovery_codes.regenerate.confirm.body_2') }}</p>
@@ -47,7 +51,7 @@ export default {
 
     props: {
         codes: {
-            required:true,
+            required: true,
         },
         routes: {
             required: true

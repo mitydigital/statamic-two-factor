@@ -11,7 +11,7 @@
             <div class="card auth-card mx-auto">
 
                 <div>
-                    <h1 class="mb-4 text-lg text-gray-800">{{ __('statamic-two-factor::setup.title') }}</h1>
+                    <h1 class="mb-4 text-lg text-gray-800 dark:text-dark-175">{{ __('statamic-two-factor::setup.title') }}</h1>
                 </div>
                 <form method="POST" class="">
                     {!! csrf_field() !!}
@@ -24,7 +24,7 @@
                                 {!! $qr !!}
                             </div>
 
-                            <div class="text-sm">
+                            <div class="text-sm text-gray-800  dark:text-dark-175">
                                 <div class="font-bold text-xs">{{ __('statamic-two-factor::setup.code') }}:</div>
                                 <div>{{ $secret_key }}</div>
                             </div>
@@ -32,7 +32,7 @@
 
                         <div class="right">
                             <div class="mb-6">
-                                <p class="text-sm text-gray">{{ __('statamic-two-factor::setup.introduction') }}</p>
+                                <p class="text-sm text-gray dark:text-dark-175">{{ __('statamic-two-factor::setup.introduction') }}</p>
                             </div>
 
                             <div class="md:hidden">
@@ -63,8 +63,9 @@
                 </form>
             </div>
 
-            <div class="mt-4 text-xs text-center">
-                <a class="logout" href="{{ cp_route('logout') }}?redirect={{ cp_route('login') }}">{{ __('statamic-two-factor::actions.logout') }}</a>
+            <div class="mt-4 text-sm text-center">
+                <a class="logout opacity-75 hover:opacity-100"
+                   href="{{ cp_route('logout') }}?redirect={{ cp_route('login') }}">{{ __('statamic-two-factor::actions.logout') }}</a>
             </div>
         </div>
 
