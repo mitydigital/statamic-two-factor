@@ -7,7 +7,7 @@ return [
 
     'recovery_code_challenge_failed' => 'De verstrekte tweestapsverificatiecode was ongeldig.',
 
-    'recovery_codes_updated' => "Deze code is gebruikt en vervangen door een nieuwe code - vergeet niet om je opgeslagen herstelcodes bij te werken.",
+    'recovery_codes_updated' => 'Deze code is gebruikt en vervangen door een nieuwe code - vergeet niet om je opgeslagen herstelcodes bij te werken.',
 
     'recovery_code_used_greeting' => 'Hallo :name,',
     'recovery_code_used_subject' => 'Een herstelcode is gebruikt op jouw account',

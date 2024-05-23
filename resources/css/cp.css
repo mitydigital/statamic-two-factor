@@ -8,6 +8,10 @@
     display:block;
 }
 
+.two-factor .two-factor-recovery-codes .auth-card {
+    @apply md:max-w-sm;
+}
+
 .two-factor .two-factor-setup .auth-card {
     @apply md:max-w-2xl;
 }

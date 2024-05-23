@@ -7,7 +7,7 @@ return [
 
     'recovery_code_challenge_failed' => "Il codice di emergenza utilizzato per l'autenticazione a due fattori non è valido.",
 
-    'recovery_codes_updated' => "Questo codice è stato utilizzato e sostituito con uno nuovo; non dimenticare di aggiornare i tuoi codici di emergenza.",
+    'recovery_codes_updated' => 'Questo codice è stato utilizzato e sostituito con uno nuovo; non dimenticare di aggiornare i tuoi codici di emergenza.',
 
     'recovery_code_used_greeting' => 'Ciao :name,',
     'recovery_code_used_subject' => 'È stato utilizzato un codice di emergenza',
