@@ -5,8 +5,8 @@
 
     @include('statamic::partials.outside-logo')
     <div class="two-factor">
-
         <div class="two-factor-challenge">
+
             <div class="card auth-card mx-auto"
                  x-data="{ mode: '{{ $mode }}', code: '', recovery_code: '' }">
 
@@ -75,6 +75,7 @@
                 <a class="logout opacity-75 hover:opacity-100"
                    href="{{ cp_route('logout') }}?redirect={{ cp_route('login') }}">{{ __('statamic-two-factor::actions.logout') }}</a>
             </div>
+
         </div>
     </div>
 

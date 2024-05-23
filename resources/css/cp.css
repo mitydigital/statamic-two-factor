@@ -8,6 +8,14 @@
     display:block;
 }
 
+.space-x-4 > * + * {
+    margin-left: 1rem;
+}
+
+.two-factor .two-factor-locked .auth-card {
+    @apply md:max-w-sm;
+}
+
 .two-factor .two-factor-recovery-codes .auth-card {
     @apply md:max-w-sm;
 }
@@ -22,6 +30,10 @@
 
 .two-factor .two-factor-setup .right {
     @apply md:pl-8;
+}
+
+.two-factor .two-factor-challenge .auth-card {
+    @apply md:max-w-sm;
 }
 
 .two-factor .two-factor-challenge .text-btn {

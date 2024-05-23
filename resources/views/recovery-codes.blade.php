@@ -5,7 +5,6 @@
 
     @include('statamic::partials.outside-logo')
     <div class="two-factor">
-
         <div class="two-factor-recovery-codes">
 
             <div class="card auth-card mx-auto">
@@ -32,6 +31,7 @@
                         </div>
                     </form>
                 </div>
+
             </div>
         </div>
     </div>
