@@ -47,19 +47,24 @@ uses(TestCase::class)->in('Actions', 'Commands', 'Concerns',
 |
 */
 
-function createUser(): Statamic\Auth\File\User|Statamic\Auth\Eloquent\User
+function createUser(bool $isSuper = true): Statamic\Auth\File\User|Statamic\Auth\Eloquent\User
 {
-    return User::make()
-        ->makeSuper()
+    $user = User::make()
         ->set('name', 'Peter Parker')
         ->email('peter.parker@spiderman.com')
         ->set('password', 'secret')
         ->save();
+
+    if ($isSuper) {
+        $user->makeSuper()->save();
+    }
+
+    return $user;
 }
 
-function createUserWithTwoFactor(): Statamic\Auth\File\User|Statamic\Auth\Eloquent\User
+function createUserWithTwoFactor(bool $isSuper = true): Statamic\Auth\File\User|Statamic\Auth\Eloquent\User
 {
-    $user = createUser();
+    $user = createUser($isSuper);
 
     $user->set('two_factor_locked', false);
     $user->set('two_factor_confirmed_at', now());

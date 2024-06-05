@@ -17,6 +17,27 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Role-specific enforcement
+    |--------------------------------------------------------------------------
+    |
+    | Super admins will always require two factor.
+    |
+    | Provide an array of Role handles that should have two factor enforced,
+    | such as:
+    |   'enforced_roles' => [
+    |       'content_publisher',
+    |       'users_admin',
+    |   ],
+    |
+    | An empty array will mean that no roles are enforced.
+    | Set to null to enforce for all roles.
+    |
+    */
+
+    'enforced_roles' => null,
+
+    /*
+    |--------------------------------------------------------------------------
     | Blueprint field
     |--------------------------------------------------------------------------
     |
