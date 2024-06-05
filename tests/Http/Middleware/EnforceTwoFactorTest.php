@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use MityDigital\StatamicTwoFactor\Facades\StatamicTwoFactorUser;
 use MityDigital\StatamicTwoFactor\Http\Middleware\EnforceTwoFactor;
+use Statamic\Facades\Role;
 
 use function Pest\Laravel\get;
 use function Pest\Laravel\post;
@@ -154,4 +155,129 @@ it('redirects to the challenge when validity is disabled and there is no recent 
     // success!
     expect($response)
         ->status()->toBe(200);
+});
+
+it('redirects to the challenge when super admin', function () {
+    $user = createUserWithTwoFactor(true);
+    $this->actingAs($user);
+
+    // ALL roles
+    config()->set('statamic-two-factor.enforced_roles', null);
+
+    //
+    // Middleware setup
+    //
+    $request = Request::create(cp_route('dashboard'));
+    $next = function () {
+        return response('No enforcement');
+    };
+
+    $middleware = app(EnforceTwoFactor::class);
+
+    // Standard - should redirect
+    $response = $middleware->handle($request, $next);
+    expect($response->isRedirect(cp_route('statamic-two-factor.challenge')))
+        ->toBeTrue();
+
+    // SPECIFIC roles
+    config()->set('statamic-two-factor.enforced_roles', []);
+
+    // Expect roles, should redirect
+    $response = $middleware->handle($request, $next);
+    expect($response->isRedirect(cp_route('statamic-two-factor.challenge')))
+        ->toBeTrue();
+});
+
+it('redirects to the challenge when no enforced roles provided', function () {
+    $user = createUserWithTwoFactor(false);
+    $this->actingAs($user);
+
+    //
+    // Middleware setup
+    //
+    $request = Request::create(cp_route('dashboard'));
+    $next = function () {
+        return response('No enforcement');
+    };
+
+    $middleware = app(EnforceTwoFactor::class);
+
+    // ALL roles
+    config()->set('statamic-two-factor.enforced_roles', null);
+
+    // Standard - should redirect
+    $response = $middleware->handle($request, $next);
+    expect($response->isRedirect(cp_route('statamic-two-factor.challenge')))
+        ->toBeTrue();
+
+    // EXPLICIT roles - none provided meaning not enforced
+    config()->set('statamic-two-factor.enforced_roles', []);
+
+    // Standard - should redirect
+    $response = $middleware->handle($request, $next);
+    expect($response->isRedirect(cp_route('statamic-two-factor.challenge')))
+        ->toBeFalse();
+
+    // create some roles
+    $enforceableRole = Role::make('enforceable_role')->save();
+    $standardRole = Role::make('standard_role')->save();
+
+    // assign role to user
+    $user->assignRole($enforceableRole);
+    expect($user->hasRole($enforceableRole))->toBeTrue()
+        ->and($user->hasRole($standardRole))->toBeFalse();
+
+    $response = $middleware->handle($request, $next);
+    expect($response->isRedirect(cp_route('statamic-two-factor.challenge')))
+        ->toBeFalse();
+
+    //
+    // EXPLICIT roles - one provided meaning enforced
+    //
+    config()->set('statamic-two-factor.enforced_roles', [
+        $enforceableRole->handle(),
+    ]);
+
+    $user->removeRole($enforceableRole);
+    expect($user->roles())->toHaveCount(0);
+
+    // no roles
+    $response = $middleware->handle($request, $next);
+    expect($response->isRedirect(cp_route('statamic-two-factor.challenge')))
+        ->toBeFalse();
+
+    // assign role to user
+    $user->assignRole($enforceableRole);
+
+    expect($user->hasRole($enforceableRole))->toBeTrue()
+        ->and($user->hasRole($standardRole))->toBeFalse();
+
+    // Standard - should redirect
+    $response = $middleware->handle($request, $next);
+    expect($response->isRedirect(cp_route('statamic-two-factor.challenge')))
+        ->toBeTrue();
+
+    // assign both roles
+    $user->assignRole($enforceableRole);
+    $user->assignRole($standardRole);
+
+    expect($user->hasRole($enforceableRole))->toBeTrue()
+        ->and($user->hasRole($standardRole))->toBeTrue();
+
+    // Standard - should redirect
+    $response = $middleware->handle($request, $next);
+    expect($response->isRedirect(cp_route('statamic-two-factor.challenge')))
+        ->toBeTrue();
+
+    // remove enforceable role
+    $user->removeRole($enforceableRole);
+    $user->assignRole($standardRole);
+
+    expect($user->hasRole($enforceableRole))->toBeFalse()
+        ->and($user->hasRole($standardRole))->toBeTrue();
+
+    // Standard - should redirect
+    $response = $middleware->handle($request, $next);
+    expect($response->isRedirect(cp_route('statamic-two-factor.challenge')))
+        ->toBeFalse();
 });
