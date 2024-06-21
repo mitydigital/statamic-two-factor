@@ -18,7 +18,7 @@
                     <div class="md:flex">
 
                         <div class="left">
-                            <div class="mb-4"
+                            <div class="mb-4 p-2 bg-white"
                                  style="width:170px; flex-shrink:0;">
                                 {!! $qr !!}
                             </div>
@@ -35,7 +35,7 @@
                             </div>
 
                             <div class="md:hidden">
-                                <div class="mb-2"
+                                <div class="mb-2 p-2 bg-white"
                                      style="width:100%">
                                     {!! $qr !!}
                                 </div>
