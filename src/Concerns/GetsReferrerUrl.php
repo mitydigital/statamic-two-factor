@@ -2,12 +2,21 @@
 
 namespace MityDigital\StatamicTwoFactor\Concerns;
 
+use Illuminate\Http\Request;
 use Route;
 
 trait GetsReferrerUrl
 {
-    protected function getReferrerUrl()
+    protected function getReferrerUrl(Request $request)
     {
+        $sessionReferer = session()->get('two_factor_referer', null);
+
+        session()->put('two_factor_referer', null);
+
+        if ($sessionReferer) {
+            return $sessionReferer;
+        }
+
         $url = url()->previous();
 
         $route = collect(Route::getRoutes())->first(function (\Illuminate\Routing\Route $route) use ($url) {
