@@ -35,10 +35,10 @@ it('returns null when a statamic two factor route is the referrer', function () 
 
     foreach ($packageRoutes as $referrer => $params) {
         // create a request with the referrer set
-        createRequestWithReferrer(cp_route($referrer, $params));
+        $request = createRequestWithReferrer(cp_route($referrer, $params));
 
         // expect null returned
-        expect($this->getReferrerUrl())
+        expect($this->getReferrerUrl($request))
             ->toBeNull();
     }
 });
@@ -48,9 +48,23 @@ it('returns the referrer when a non-two factor route is present', function () {
     $route = cp_route('dashboard');
 
     // create a request with the referrer set
-    createRequestWithReferrer($route);
+    $request = createRequestWithReferrer($route);
 
     // expect null returned
-    expect($this->getReferrerUrl())
+    expect($this->getReferrerUrl($request))
         ->toBe($route);
+});
+
+it('returns the two factor session referrer when present', function () {
+    // create the route
+    $route = cp_route('dashboard');
+
+    // create a request with the referrer set
+    $request = createRequestWithReferrer($route);
+
+    session()->put('two_factor_referer', '/cp/collections');
+
+    // expect null returned
+    expect($this->getReferrerUrl($request))
+        ->toBe('/cp/collections');
 });

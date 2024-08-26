@@ -30,8 +30,8 @@ class TwoFactorChallengeController extends BaseController
         }
 
         // if we have a referrer URL, set it
-        if ($referrer = $this->getReferrerUrl()) {
-            // if we are not null, let's set it (this way it won't overwrite on failed attemts)
+        if ($referrer = $this->getReferrerUrl($request)) {
+            // if we are not null, let's set it (this way it won't overwrite on failed attempts)
             if ($referrer) {
                 $request->session()->put('statamic_two_factor_referrer', $referrer);
             }
