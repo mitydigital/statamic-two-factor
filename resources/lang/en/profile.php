@@ -66,7 +66,7 @@ return [
         'user_intro_1' => 'This will remove all two factor authentication details from their account.',
         'user_intro_2' => 'They will be able to enable two factor authentication from their Profile in the Control Panel.',
 
-        'user_enforced_intro_1' => 'This will remove all two factor authentication details from their account, and log you them out.',
+        'user_enforced_intro_1' => 'This will remove all two factor authentication details from their account, and log them out.',
         'user_enforced_intro_2' => 'The next time they log in, they will need to set up two factor authentication again before they can access the Control Panel.',
 
         'confirm' => [
