@@ -2,6 +2,14 @@
 
 return [
 
+    'enable' => [
+        'title' => 'Enable two factor authentication',
+
+        'intro' => 'When two factor authentication is enabled, you will be prompted for a token during authentication. You may retrieve this token from your phone\'s authenticator application, such as Google Authenticator or password managers like 1Password.',
+
+        'enable' => 'Set up two factor authentication',
+    ],
+
     'locked' => [
         'title' => 'Account is locked',
 
@@ -20,7 +28,7 @@ return [
     'recovery_codes' => [
         'title' => 'Recovery codes',
 
-        'intro' => 'When two factor authentication is enabled, you will be prompted for a secure, random token during authentication. You may retrieve this token from your phone\'s authenticator application, such as Google Authenticator or password managers like 1Password.',
+        'intro' => 'When two factor authentication is enabled, you will be prompted for a token during authentication. You may retrieve this token from your phone\'s authenticator application, such as Google Authenticator or password managers like 1Password.',
 
         'codes' => [
             'new' => 'Your new recovery codes',
@@ -49,20 +57,36 @@ return [
     'reset' => [
         'title' => 'Reset two factor setup',
 
-        'me_intro_1' => 'This will remove all two factor authentication details from your account, and log you out.',
-        'me_intro_2' => 'The next time you log in, you will need to set up two factor authentication again before you can access the Control Panel.',
+        'me_intro_1' => 'This will remove all two factor authentication details from your account.',
+        'me_intro_2' => 'You can set up two factor authentication again from your Profile in the Control Panel.',
 
-        'user_intro_1' => 'This will remove all two factor authentication details from their account, and log you them out.',
-        'user_intro_2' => 'The next time they log in, they will need to set up two factor authentication again before they can access the Control Panel.',
+        'me_enforced_intro_1' => 'This will remove all two factor authentication details from your account, and log you out.',
+        'me_enforced_intro_2' => 'The next time you log in, you will need to set up two factor authentication again before you can access the Control Panel.',
+
+        'user_intro_1' => 'This will remove all two factor authentication details from their account.',
+        'user_intro_2' => 'They will be able to enable two factor authentication from their Profile in the Control Panel.',
+
+        'user_enforced_intro_1' => 'This will remove all two factor authentication details from their account, and log you them out.',
+        'user_enforced_intro_2' => 'The next time they log in, they will need to set up two factor authentication again before they can access the Control Panel.',
 
         'confirm' => [
             'title' => 'Are you sure?',
 
-            'me_1' => 'This will remove all two factor authentication details from your account, and log you out <strong>immediately</strong>. You will need to set up two factor authentication on your next log in.',
-            'me_2' => 'Are you really sure you want to do this?',
+            'me_1' => 'This will remove all two factor authentication details from your account.',
+            'me_2' => 'You can set up two factor authentication from your Profile in the Control Panel.',
+            'me_3' => 'Are you really sure you want to do this?',
 
-            'user_1' => 'This will remove all two factor authentication details from their account, and log them out on their next visit. They will need to set up two factor authentication on their next log in.',
-            'user_2' => 'Are you really sure you want to do this?',
+            'me_enforced_1' => 'This will remove all two factor authentication details from your account, and log you out <strong>immediately</strong>.',
+            'me_enforced_2' => 'You will need to set up two factor authentication on your next log in.',
+            'me_enforced_3' => 'Are you really sure you want to do this?',
+
+            'user_1' => 'This will remove all two factor authentication details from their account.',
+            'user_2' => 'They can set up two factor authentication from their Profile in the Control Panel.',
+            'user_3' => 'Are you really sure you want to do this?',
+
+            'user_enforced_1' => 'This will remove all two factor authentication details from their account, and log them out on their next visit.',
+            'user_enforced_2' => 'They will need to set up two factor authentication on their next log in.',
+            'user_enforced_3' => 'Are you really sure you want to do this?',
         ],
 
         'action' => 'Reset two factor setup',
@@ -73,7 +97,8 @@ return [
     'messages' => [
         'wrong_view' => 'The Two Factor fieldtype can only be used on the "Edit users" view.',
 
-        'not_setup' => 'Two Factor Authentication has not been set up yet. You can manage two factor authentication details after the user has completed the setup process.',
+        'not_setup_1' => 'Two Factor Authentication has not been set up yet.',
+        'not_setup_2' => 'You can manage two factor authentication details after the user has completed the setup process.',
 
         'not_enabled' => 'Two Factor Authtentication is not enabled for this site.',
     ],

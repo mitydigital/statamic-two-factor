@@ -5,6 +5,7 @@ namespace MityDigital\StatamicTwoFactor\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use MityDigital\StatamicTwoFactor\Actions\DisableTwoFactorAuthentication;
+use MityDigital\StatamicTwoFactor\Facades\StatamicTwoFactorUser;
 use Statamic\Facades\User;
 
 class UserResetController extends BaseController
@@ -22,10 +23,16 @@ class UserResetController extends BaseController
         // disable two factor
         $disable($user);
 
+        // redirect
+        // if two factor is enforcable, and the same user, log them out
+        $redirect = null;
+        if ($user->id === $requestingUser->id && StatamicTwoFactorUser::isTwoFactorEnforceable()) {
+            $redirect = cp_route('logout');
+        }
+
         // success
         return [
-            // if the requesting user is the user being actioned, log the user out
-            'redirect' => $user->id === $requestingUser->id ? cp_route('logout') : null,
+            'redirect' => $redirect,
         ];
     }
 }

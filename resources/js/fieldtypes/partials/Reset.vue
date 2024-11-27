@@ -3,8 +3,8 @@
         <div>
             <div class="font-semibold mb-2">{{ __('statamic-two-factor::profile.reset.title') }}</div>
             <div class="text-xs text-gray-700 mb-4">
-                <p class="mb-1">{{ __('statamic-two-factor::profile.reset.' + languageUser + '_intro_1') }}</p>
-                <p class="mb-1">{{ __('statamic-two-factor::profile.reset.' + languageUser + '_intro_2') }}</p>
+                <p class="mb-1">{{ __('statamic-two-factor::profile.reset.' + languageUserEnforced + '_intro_1') }}</p>
+                <p class="mb-1">{{ __('statamic-two-factor::profile.reset.' + languageUserEnforced + '_intro_2') }}</p>
             </div>
 
             <div>
@@ -21,9 +21,10 @@
             @confirm="action"
             @cancel="confirming = false"
         >
-            <p class="mb-2" v-html="__('statamic-two-factor::profile.reset.confirm.'+languageUser+'_1')"></p>
+            <p class="mb-2" v-html="__('statamic-two-factor::profile.reset.confirm.'+languageUserEnforced+'_1')"></p>
+            <p class="mb-2" v-html="__('statamic-two-factor::profile.reset.confirm.'+languageUserEnforced+'_2')"></p>
             <p class="font-medium text-red-500">
-                {{ __('statamic-two-factor::profile.reset.confirm.' + languageUser + '_2') }}</p>
+                {{ __('statamic-two-factor::profile.reset.confirm.' + languageUserEnforced + '_3') }}</p>
         </confirmation-modal>
     </div>
 </template>
@@ -34,6 +35,10 @@ export default {
     mixins: [Fieldtype],
 
     props: {
+        enforced: {
+            type: Boolean,
+            required: true
+        },
         languageUser: {
             required: true
         },
@@ -43,6 +48,9 @@ export default {
     },
 
     computed: {
+        languageUserEnforced() {
+            return this.languageUser;
+        },
         timerId() {
             return 'statamic-two-factor-reset-' + this._uid;
         }

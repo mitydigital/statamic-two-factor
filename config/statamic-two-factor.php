@@ -4,12 +4,12 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Is two factor enforced?
+    | Is two factor enabled?
     |--------------------------------------------------------------------------
     |
-    | When enabled, two factor authentication is required by all users of the
-    | Statamic CP. This will direct them to a setup screen on their next
-    | page visit, or the next time they sign in.
+    | When enabled, two factor authentication challenges will be presented to
+    | users of the Statamic CP. This will direct them to a setup screen on
+    | their next page visit, or the next time they sign in.
     |
     */
 
@@ -30,11 +30,12 @@ return [
     |   ],
     |
     | An empty array will mean that no roles are enforced.
+    |
     | Set to null to enforce for all roles.
     |
     */
 
-    'enforced_roles' => null,
+    'enforced_roles' => [],
 
     /*
     |--------------------------------------------------------------------------

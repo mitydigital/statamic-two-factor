@@ -54,7 +54,13 @@
 
                             <div class="flex justify-between items-center">
                                 <div></div>
-                                <button type="submit" class="btn-primary">{{ __('statamic-two-factor::setup.action') }}</button>
+
+                                <div class="flex space-x-2">
+                                    @if ($cancellable)
+                                        <a class="btn" href="{{ cp_route('dashboard') }}" >{{ __('statamic-two-factor::setup.cancel') }}</a>
+                                    @endif
+                                    <button type="submit" class="btn-primary">{{ __('statamic-two-factor::setup.action') }}</button>
+                                </div>
                             </div>
                         </div>
                     </div>

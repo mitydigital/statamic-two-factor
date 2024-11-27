@@ -2,6 +2,14 @@
 
 return [
 
+    'enable' => [
+        'title' => 'Aktiver tofaktoroppsett',
+
+        'intro' => 'Når tofaktorautentisering er aktivert, vil du bli bedt om et token under autentisering. Du kan hente dette tokenet fra telefonens autentiseringsapplikasjon, som Google Authenticator eller passordbehandlere som 1Password.',
+
+        'enable' => 'Sett opp tofaktoroppsett',
+    ],
+
     'locked' => [
         'title' => 'Kontoen er låst',
 
@@ -20,7 +28,7 @@ return [
     'recovery_codes' => [
         'title' => 'Gjenopprettingskoder',
 
-        'intro' => 'Når tofaktorautentisering er aktivert, vil du bli bedt om et sikkert, tilfeldig token under autentisering. Du kan hente dette tokenet fra telefonens autentiseringsapplikasjon, som Google Authenticator eller passordbehandlere som 1Password.',
+        'intro' => 'Når tofaktorautentisering er aktivert, vil du bli bedt om et token under autentisering. Du kan hente dette tokenet fra telefonens autentiseringsapplikasjon, som Google Authenticator eller passordbehandlere som 1Password.',
 
         'codes' => [
             'new' => 'Dine nye gjenopprettingskoder',

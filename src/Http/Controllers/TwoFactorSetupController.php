@@ -4,6 +4,7 @@ namespace MityDigital\StatamicTwoFactor\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Arr;
 use MityDigital\StatamicTwoFactor\Actions\CompleteTwoFactorAuthenticationSetup;
 use MityDigital\StatamicTwoFactor\Actions\ConfirmTwoFactorAuthentication;
 use MityDigital\StatamicTwoFactor\Actions\EnableTwoFactorAuthentication;
@@ -27,6 +28,7 @@ class TwoFactorSetupController extends BaseController
 
         // show the setup view
         return view('statamic-two-factor::setup', [
+            'cancellable' => Arr::get(User::current()->two_factor, 'cancellable', false),
             'qr' => $provider->getQrCodeSvg(),
             'secret_key' => $provider->getSecretKey(),
         ]);

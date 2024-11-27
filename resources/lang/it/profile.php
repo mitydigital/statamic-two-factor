@@ -2,6 +2,14 @@
 
 return [
 
+    'enable' => [
+        'title' => "Abilitare l'autenticazione a due fattori",
+
+        'intro' => "Quando l'autenticazione a due fattori è attiva, verrà richiesto un token. Il token può essere recuperato dall'applicazione di autenticazione del telefono, come Google Authenticator o tramite gestori di password come 1Password.",
+
+        'enable' => "Impostare l'autenticazione a due fattori",
+    ],
+
     'locked' => [
         'title' => "L'account è stato bloccato",
 
@@ -20,7 +28,7 @@ return [
     'recovery_codes' => [
         'title' => 'Codici di emergenza',
 
-        'intro' => "Quando l'autenticazione a due fattori è attiva, verrà richiesto un token sicuro e casuale. Il token può essere recuperato dall'applicazione di autenticazione del telefono, come Google Authenticator o tramite gestori di password come 1Password.",
+        'intro' => "Quando l'autenticazione a due fattori è attiva, verrà richiesto un token. Il token può essere recuperato dall'applicazione di autenticazione del telefono, come Google Authenticator o tramite gestori di password come 1Password.",
 
         'codes' => [
             'new' => 'I tuoi nuovi codici di emergenza',

@@ -2,6 +2,14 @@
 
 return [
 
+    'enable' => [
+        'title' => 'Stel tweestapsverificatie in',
+
+        'intro' => 'Wanneer tweestapsverificatie is ingeschakeld, wordt je tijdens de verificatie gevraagd om een token in te voeren. Je kunt deze token verkrijgen via de authenticatie-app op je telefoon, zoals Google Authenticator of wachtwoordbeheerders zoals 1Password.',
+
+        'enable' => 'Stel tweestapsverificatie in',
+    ],
+
     'locked' => [
         'title' => 'Account is vergrendeld',
 
@@ -20,7 +28,7 @@ return [
     'recovery_codes' => [
         'title' => 'Herstelcodes',
 
-        'intro' => 'Wanneer tweestapsverificatie is ingeschakeld, wordt je tijdens de verificatie gevraagd om een veilige, willekeurige token in te voeren. Je kunt deze token verkrijgen via de authenticatie-app op je telefoon, zoals Google Authenticator of wachtwoordbeheerders zoals 1Password.',
+        'intro' => 'Wanneer tweestapsverificatie is ingeschakeld, wordt je tijdens de verificatie gevraagd om een token in te voeren. Je kunt deze token verkrijgen via de authenticatie-app op je telefoon, zoals Google Authenticator of wachtwoordbeheerders zoals 1Password.',
 
         'codes' => [
             'new' => 'Je nieuwe herstelcodes',

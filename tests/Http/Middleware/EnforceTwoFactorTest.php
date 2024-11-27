@@ -59,6 +59,58 @@ it('redirects to the setup route when two factor setup is not completed', functi
         ->toBeTrue();
 });
 
+it('redirects to the setup route when two factor setup is not completed when the user is super', function () {
+    $user = createUser(true);
+    $this->actingAs($user);
+
+    config()->set('statamic-two-factor.enforced_roles', []);
+
+    $request = Request::create(cp_route('index'));
+    $request->setUserResolver(fn () => $user);
+
+    $middleware = new EnforceTwoFactor();
+
+    $response = $middleware->handle($request, function () {
+    });
+
+    expect($response->isRedirect(cp_route('statamic-two-factor.setup')))
+        ->toBeTrue();
+});
+
+it('redirects to the setup route when two factor setup is not completed when the user has an enforced role', function () {
+    $user = createUser(false);
+    $this->actingAs($user);
+
+    config()->set('statamic-two-factor.enforced_roles', []);
+
+    $request = Request::create(cp_route('index'));
+    $request->setUserResolver(fn () => $user);
+
+    $middleware = new EnforceTwoFactor();
+
+    $response = $middleware->handle($request, function () {
+    });
+
+    expect($response)->toBeNull(); // no response
+
+    // create some roles
+    $enforceableRole = Role::make('enforceable_role')->save();
+    $standardRole = Role::make('standard_role')->save();
+
+    config()->set('statamic-two-factor.enforced_roles', ['enforceable_role']);
+
+    // assign role to user
+    $user->assignRole($enforceableRole);
+    expect($user->hasRole($enforceableRole))->toBeTrue()
+        ->and($user->hasRole($standardRole))->toBeFalse();
+
+    $response = $middleware->handle($request, function () {
+    });
+
+    expect($response->isRedirect(cp_route('statamic-two-factor.setup')))
+        ->toBeTrue();
+});
+
 //
 // VALIDITY enabled
 //
@@ -188,7 +240,7 @@ it('redirects to the challenge when super admin', function () {
         ->toBeTrue();
 });
 
-it('redirects to the challenge when no enforced roles provided', function () {
+it('redirects to the challenge two factor enabled and when no enforced roles provided', function () {
     $user = createUserWithTwoFactor(false);
     $this->actingAs($user);
 
@@ -213,10 +265,10 @@ it('redirects to the challenge when no enforced roles provided', function () {
     // EXPLICIT roles - none provided meaning not enforced
     config()->set('statamic-two-factor.enforced_roles', []);
 
-    // Standard - should redirect
+    // Standard - should redirect because two factor is set up
     $response = $middleware->handle($request, $next);
     expect($response->isRedirect(cp_route('statamic-two-factor.challenge')))
-        ->toBeFalse();
+        ->toBeTrue();
 
     // create some roles
     $enforceableRole = Role::make('enforceable_role')->save();
@@ -229,7 +281,7 @@ it('redirects to the challenge when no enforced roles provided', function () {
 
     $response = $middleware->handle($request, $next);
     expect($response->isRedirect(cp_route('statamic-two-factor.challenge')))
-        ->toBeFalse();
+        ->toBeTrue();
 
     //
     // EXPLICIT roles - one provided meaning enforced
@@ -244,7 +296,7 @@ it('redirects to the challenge when no enforced roles provided', function () {
     // no roles
     $response = $middleware->handle($request, $next);
     expect($response->isRedirect(cp_route('statamic-two-factor.challenge')))
-        ->toBeFalse();
+        ->toBeTrue();
 
     // assign role to user
     $user->assignRole($enforceableRole);
@@ -279,5 +331,5 @@ it('redirects to the challenge when no enforced roles provided', function () {
     // Standard - should redirect
     $response = $middleware->handle($request, $next);
     expect($response->isRedirect(cp_route('statamic-two-factor.challenge')))
-        ->toBeFalse();
+        ->toBeTrue();
 });

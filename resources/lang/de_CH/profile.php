@@ -2,6 +2,14 @@
 
 return [
 
+    'enable' => [
+        'title' => 'Zwei-Faktor-Authentifizierung aktivieren',
+
+        'intro' => 'Mit dem Einrichten der Zwei-Faktor-Authentifizierung wirst du während der Anmeldung nach einem Authentifizierungscode gefragt. Dieser Code wird von TOTP-Apps wie Google Authenticator, Bitwarden oder FreeOTP+ generiert.',
+
+        'enable' => 'Zwei-Faktor-Authentifizierung einrichten',
+    ],
+
     'locked' => [
         'title' => 'Konto ist gesperrt',
 
@@ -20,7 +28,7 @@ return [
     'recovery_codes' => [
         'title' => 'Wiederherstellungscodes',
 
-        'intro' => 'Mit dem Einrichten der Zwei-Faktor-Authentifizierung wirst du während der Anmeldung nach einem sicheren und zufälligen Authentifizierungscode gefragt. Dieser Code wird von TOTP-Apps wie Google Authenticator, Bitwarden oder FreeOTP+ generiert.',
+        'intro' => 'Mit dem Einrichten der Zwei-Faktor-Authentifizierung wirst du während der Anmeldung nach einem Authentifizierungscode gefragt. Dieser Code wird von TOTP-Apps wie Google Authenticator, Bitwarden oder FreeOTP+ generiert.',
 
         'codes' => [
             'new' => 'Deine neuen Wiederherstellungscodes',
