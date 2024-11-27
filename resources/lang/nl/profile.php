@@ -81,7 +81,8 @@ return [
     'messages' => [
         'wrong_view' => 'Het tweestapsverificatieveldtype kan alleen worden gebruikt op de weergave "Gebruikers bewerken".',
 
-        'not_setup' => 'Tweestapsverificatie is nog niet ingesteld. Je kunt de tweestapsverificatiegegevens beheren nadat de gebruiker het instelproces heeft voltooid.',
+        'not_setup_1' => 'Tweestapsverificatie is nog niet ingesteld.',
+        'not_setup_2' => 'Je kunt de tweestapsverificatiegegevens beheren nadat de gebruiker het instelproces heeft voltooid.',
 
         'not_enabled' => 'Tweestapsverificatie is niet ingeschakeld voor deze site.',
     ],

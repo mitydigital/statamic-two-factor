@@ -81,7 +81,8 @@ return [
     'messages' => [
         'wrong_view' => 'Tofaktorfeltet kan kun brukes på "Rediger brukere"-visningen.',
 
-        'not_setup' => 'Tofaktorautentisering er ikke satt opp ennå. Du kan administrere tofaktorautentiseringsdetaljer etter at brukeren har fullført oppsettet.',
+        'not_setup_1' => 'Tofaktorautentisering er ikke satt opp ennå.',
+        'not_setup_2' => 'Du kan administrere tofaktorautentiseringsdetaljer etter at brukeren har fullført oppsettet.',
 
         'not_enabled' => 'Tofaktorautentisering er ikke aktivert for dette nettstedet.',
     ],

@@ -81,7 +81,8 @@ return [
     'messages' => [
         'wrong_view' => 'Das Zwei-Faktor-Feld kann lediglich bei der Ansicht «Benutzer bearbeiten» verwendet werden.',
 
-        'not_setup' => 'Zwei-Faktor-Authentifizierung wurde nicht aufgesetzt. Du kannst diese nach dem Aufsetzen durch den Benutzer verwalten.',
+        'not_setup_1' => 'Zwei-Faktor-Authentifizierung wurde nicht aufgesetzt.',
+        'not_setup_2' => 'Du kannst diese nach dem Aufsetzen durch den Benutzer verwalten.',
 
         'not_enabled' => 'Zwei-Faktor-Authentifizierung ist für diese Seite nicht aktiviert.',
     ],

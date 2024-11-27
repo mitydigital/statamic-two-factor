@@ -81,7 +81,8 @@ return [
     'messages' => [
         'wrong_view' => "Il campo per l'autenticazione a due fattori può essere utilizzato solo nella vista 'Modifica utenti'.",
 
-        'not_setup' => "L'autenticazione a due fattori non è ancora stata attivata. È possibile gestire i dettagli dell'autenticazione a due fattori dopo che l'utente ha completato il processo di configurazione.",
+        'not_setup_1' => "L'autenticazione a due fattori non è ancora stata attivata.",
+        'not_setup_2' => "È possibile gestire i dettagli dell'autenticazione a due fattori dopo che l'utente ha completato il processo di configurazione.",
 
         'not_enabled' => "L'autenticazione a due fattori non è attiva.",
     ],
