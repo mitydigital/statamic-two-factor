@@ -57,14 +57,14 @@ return [
     'reset' => [
         'title' => 'Zwei-Faktor-Authentifizierung zurücksetzen',
 
-        'me_intro_1' => 'Dies entfernt die Zwei-Faktor-Authentifizierung aus deinem Account.',
-        'me_intro_2' => 'Du kannst die Zwei-Faktor-Authentifizierung erneut in deinem Profil im Control Panel einrichten.',
+        'me_intro_1' => 'Dies entfernt Angaben der Zwei-Faktor-Authentifizierung von deinem Konto.',
+        'me_intro_2' => 'Du kannst die Zwei-Faktor-Authentifizierung erneut auf deinem Profil im Kontrollzentrum aufsetzen.',
 
         'me_enforced_intro_1' => 'This will remove all two factor authentication details from your account, and log you out.',
         'me_enforced_intro_2' => 'The next time you log in, you will need to set up two factor authentication again before you can access the Control Panel.',
 
-        'user_intro_1' => 'Dies entfernt die Zwei-Faktor-Authentifizierung aus diesem Account.',
-        'user_intro_2' => 'Benutzer:innen können die Zwei-Faktor-Authentifizierung erneut in ihrem Profil im Control Panel einrichten.',
+        'user_intro_1' => 'Dies entfernt alle Angaben der Zwei-Faktor-Authentifizierung von ihrem Konto.',
+        'user_intro_2' => 'Sie kann die Zwei-Faktor-Authentifizierung erneut auf ihrem Profil im Kontrollzentrum aufsetzen.',
 
         'user_enforced_intro_1' => 'This will remove all two factor authentication details from their account, and log you them out.',
         'user_enforced_intro_2' => 'The next time they log in, they will need to set up two factor authentication again before they can access the Control Panel.',
@@ -72,16 +72,16 @@ return [
         'confirm' => [
             'title' => 'Are you sure?',
 
-            'me_1' => 'Dies entfernt die Zwei-Faktor-Authentifizierung aus deinem Account.',
-            'me_2' => 'Du kannst die Zwei-Faktor-Authentifizierung in deinem Profil im Control Panel einrichten.',
+            'me_1' => 'Dies entfernt Angaben der Zwei-Faktor-Authentifizierung von deinem Konto.',
+            'me_2' => 'Du kannst die Zwei-Faktor-Authentifizierung erneut auf deinem Profil im Kontrollzentrum aufsetzen.',
             'me_3' => 'Möchtest du dies wirklich tun?',
 
             'me_enforced_1' => 'Dies entfernt die Zwei-Faktor-Authentifizierung und meldet dich <strong>direkt</strong> ab.',
             'me_enforced_2' => 'Bei der nächsten Anmeldung wirst du zum erneuten Aufsetzen aufgefordert.',
             'me_enforced_3' => 'Möchtest du dies wirklich tun?',
 
-            'user_1' => 'Dies entfernt die Zwei-Faktor-Authentifizierung aus diesem Account.',
-            'user_2' => 'Benutzer:innen können die Zwei-Faktor-Authentifizierung in ihrem Profil im Control Panel einrichten.',
+            'user_1' => 'Dies entfernt alle Angaben der Zwei-Faktor-Authentifizierung von ihrem Konto.',
+            'user_2' => 'Sie kann die Zwei-Faktor-Authentifizierung erneut auf ihrem Profil im Kontrollzentrum aufsetzen.',
             'user_3' => 'Möchtest du dies wirklich tun?',
 
             'user_enforced_1' => 'Dies entfernt die Zwei-Faktor-Authentifizierung von den ausgewählten Konten und meldet diese <strong>direkt</strong> ab',
