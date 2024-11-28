@@ -57,20 +57,36 @@ return [
     'reset' => [
         'title' => 'Herstel tweestapsverificatie-instellingen',
 
-        'me_intro_1' => 'Dit verwijdert alle tweestapsverificatiegegevens van je account en logt je uit.',
-        'me_intro_2' => 'De volgende keer dat je inlogt, moet je tweestapsverificatie opnieuw instellen voordat je toegang krijgt tot het bedieningspaneel.',
+        'me_intro_1' => 'Dit verwijdert alle tweefactorverificatiegegevens van je account.',
+        'me_intro_2' => 'Je kunt tweefactorverificatie opnieuw instellen via je Profiel in het Controlepaneel.',
 
-        'user_intro_1' => 'Dit verwijdert alle tweestapsverificatiegegevens van hun account en logt hen uit.',
-        'user_intro_2' => 'De volgende keer dat zij inloggen, moeten ze tweestapsverificatie opnieuw instellen voordat ze toegang krijgen tot het bedieningspaneel.',
+        'me_enforced_intro_1' => 'Dit verwijdert alle tweestapsverificatiegegevens van je account en logt je uit.',
+        'me_enforced_intro_2' => 'De volgende keer dat je inlogt, moet je tweestapsverificatie opnieuw instellen voordat je toegang krijgt tot het bedieningspaneel.',
+
+        'user_intro_1' => 'Dit verwijdert alle tweefactorverificatiegegevens van hun account.',
+        'user_intro_2' => 'Ze kunnen tweefactorverificatie inschakelen via hun Profiel in het Controlepaneel.',
+
+        'user_enforced_intro_1' => 'Dit verwijdert alle tweestapsverificatiegegevens van hun account en logt hen uit.',
+        'user_enforced_intro_2' => 'De volgende keer dat zij inloggen, moeten ze tweestapsverificatie opnieuw instellen voordat ze toegang krijgen tot het bedieningspaneel.',
 
         'confirm' => [
             'title' => 'Weet je het zeker?',
 
-            'me_1' => 'Dit verwijdert alle tweestapsverificatiegegevens van je account en logt je <strong>onmiddellijk</strong> uit. Je moet tweestapsverificatie opnieuw instellen bij je volgende aanmelding.',
-            'me_2' => 'Weet je zeker dat je dit wilt doen?',
+            'me_1' => 'Dit verwijdert alle tweefactorverificatiegegevens van je account.',
+            'me_2' => 'Je kunt tweefactorverificatie instellen via je Profiel in het Controlepaneel.',
+            'me_3' => 'Weet je zeker dat je dit wilt doen?',
 
-            'user_1' => 'Dit verwijdert alle tweestapsverificatiegegevens van hun account en logt hen uit bij hun volgende bezoek. Ze moeten tweestapsverificatie opnieuw instellen bij hun volgende aanmelding.',
-            'user_2' => 'Weet je zeker dat je dit wilt doen?',
+            'me_enforced_1' => 'Dit verwijdert alle tweestapsverificatiegegevens van je account en logt je <strong>onmiddellijk</strong> uit.',
+            'me_enforced_2' => 'Je moet tweestapsverificatie opnieuw instellen bij je volgende aanmelding.',
+            'me_enforced_3' => 'Weet je zeker dat je dit wilt doen?',
+
+            'user_1' => 'Dit verwijdert alle tweefactorverificatiegegevens van hun account.',
+            'user_2' => 'Ze kunnen tweefactorverificatie instellen via hun Profiel in het Controlepaneel.',
+            'user_3' => 'Weet je zeker dat je dit wilt doen?',
+
+            'user_enforced_1' => 'Dit verwijdert alle tweestapsverificatiegegevens van hun account en logt hen uit bij hun volgende bezoek.',
+            'user_enforced_2' => 'Ze moeten tweestapsverificatie opnieuw instellen bij hun volgende aanmelding.',
+            'user_enforced_3' => 'Weet je zeker dat je dit wilt doen?',
         ],
 
         'action' => 'Herstel tweestapsverificatie-instellingen',
