@@ -6,9 +6,16 @@
                 <p>{{ __('statamic-two-factor::profile.messages.not_enabled') }}</p>
             </div>
         </template>
-        <template v-else-if="meta.is_user_edit && !setup">
+        <template v-else-if="meta.is_me && meta.is_user_edit && !setup">
+
+            <two-factor-enable
+                :route="meta.routes.setup"/>
+
+        </template>
+        <template v-else-if="!meta.is_me && meta.is_user_edit && !setup">
             <div class="text-sm">
-                <p>{{ __('statamic-two-factor::profile.messages.not_setup') }}</p>
+                <p class="font-medium mb-2">{{ __('statamic-two-factor::profile.messages.not_setup_1') }}</p>
+                <p>{{ __('statamic-two-factor::profile.messages.not_setup_2') }}</p>
             </div>
         </template>
         <template v-else-if="meta.is_user_edit">
@@ -16,17 +23,17 @@
             <two-factor-locked
                 v-if="locked"
                 :route="meta.routes.locked"
-                               @update="updateState"/>
+                @update="updateState"/>
 
             <two-factor-recovery-codes
                 v-if="meta.is_me"
-                :routes="meta.routes.recovery_codes"
-                :language-user="languageUser"/>
+                :routes="meta.routes.recovery_codes"/>
 
             <two-factor-reset
                 :route="meta.routes.reset"
+                :enforced="meta.is_enforced"
                 :language-user="languageUser"
-            @update="updateState"/>
+                @update="updateState"/>
 
         </template>
         <template v-else>
@@ -42,6 +49,7 @@
 
 <script>
 
+import TwoFactorEnable from './partials/Enable.vue';
 import TwoFactorLocked from './partials/Locked.vue';
 import TwoFactorRecoveryCodes from './partials/RecoveryCodes.vue';
 import TwoFactorReset from './partials/Reset.vue';
@@ -51,6 +59,7 @@ export default {
     mixins: [Fieldtype],
 
     components: {
+        TwoFactorEnable,
         TwoFactorLocked,
         TwoFactorRecoveryCodes,
         TwoFactorReset
@@ -58,7 +67,7 @@ export default {
 
     computed: {
         languageUser() {
-            return this.meta.is_me ? 'me' : 'user';
+            return (this.meta.is_me ? 'me' : 'user') + (this.meta.is_enforced ? '_enforced' : '');
         }
     },
 
@@ -70,10 +79,10 @@ export default {
     },
 
     methods: {
-updateState(field, status) {
-    // update the status
-    this.$data[field] = status;
-}
+        updateState(field, status) {
+            // update the status
+            this.$data[field] = status;
+        }
     },
 
     mounted() {

@@ -2,6 +2,8 @@
 
 namespace MityDigital\StatamicTwoFactor\Listeners;
 
+use MityDigital\StatamicTwoFactor\Facades\StatamicTwoFactorUser;
+
 class UserSavedListener
 {
     /**
@@ -15,9 +17,15 @@ class UserSavedListener
 
         // update the user's two factor setup and locked status
         $status = [
+            'cancellable' => false,
             'locked' => $user->two_factor_locked ? true : false,
             'setup' => $user->two_factor_confirmed_at ? true : false,
         ];
+
+        if (! $status['setup']) {
+            // we only care about this if we are not set up
+            $status['cancellable'] = ! StatamicTwoFactorUser::isTwoFactorEnforceable();
+        }
 
         // update the user's status fields, and quietly save (shhhhh!)
         $user->set(config('statamic-two-factor.blueprint', 'two_factor'), $status)

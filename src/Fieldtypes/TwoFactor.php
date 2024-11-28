@@ -2,6 +2,7 @@
 
 namespace MityDigital\StatamicTwoFactor\Fieldtypes;
 
+use MityDigital\StatamicTwoFactor\Facades\StatamicTwoFactorUser;
 use Statamic\Facades\User;
 use Statamic\Fields\Fieldtype;
 
@@ -14,6 +15,7 @@ class TwoFactor extends Fieldtype
     public function preload(): array
     {
         $isEnabled = config('statamic-two-factor.enabled', false);
+        $isEnforced = false;
         $isLocked = false;
         $isSetup = false;
         $isMe = false;
@@ -54,6 +56,7 @@ class TwoFactor extends Fieldtype
                 // build the routes if we have a user
                 if ($user) {
                     $routes = [
+                        'setup' => null,
                         'locked' => null,
                         'recovery_codes' => [
                             'generate' => null,
@@ -63,6 +66,9 @@ class TwoFactor extends Fieldtype
                     ];
 
                     if ($isMe) {
+                        // setup
+                        $routes['setup'] = cp_route('statamic-two-factor.setup');
+
                         // recovery codes
                         $routes['recovery_codes']['show'] = cp_route('statamic-two-factor.user.recovery-codes.show',
                             ['user' => $user->id]);
@@ -73,6 +79,9 @@ class TwoFactor extends Fieldtype
                         // unlock ability
                         $routes['locked'] = cp_route('statamic-two-factor.user.unlock', ['user' => $user->id]);
                     }
+
+                    // are we enforced?
+                    $isEnforced = StatamicTwoFactorUser::isTwoFactorEnforceable($user);
                 }
             }
         }
@@ -80,6 +89,7 @@ class TwoFactor extends Fieldtype
         return [
             'enabled' => $isEnabled,
 
+            'is_enforced' => $isEnforced,
             'is_locked' => $isLocked,
             'is_me' => $isMe,
             'is_setup' => $isSetup,

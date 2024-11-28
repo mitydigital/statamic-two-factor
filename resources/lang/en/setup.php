@@ -9,4 +9,5 @@ return [
     'verification_code' => 'Verification code',
 
     'action' => 'Enable 2FA',
+    'cancel' => 'Cancel',
 ];

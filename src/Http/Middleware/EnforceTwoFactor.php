@@ -18,8 +18,8 @@ class EnforceTwoFactor
             // get the user
             $user = StatamicTwoFactorUser::get();
 
-            // is two factor enforceable for this user?
-            if (StatamicTwoFactorUser::isTwoFactorEnforceable()) {
+            // two factor setup (opt-in), or is two factor enforceable (mandatory) for this user?
+            if ($user->two_factor_completed || StatamicTwoFactorUser::isTwoFactorEnforceable()) {
 
                 // is two factor NOT set up?
                 if (! $user->two_factor_completed) {

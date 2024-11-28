@@ -2,6 +2,14 @@
 
 return [
 
+    'enable' => [
+        'title' => 'Stel tweestapsverificatie in',
+
+        'intro' => 'Wanneer tweestapsverificatie is ingeschakeld, wordt je tijdens de verificatie gevraagd om een token in te voeren. Je kunt deze token verkrijgen via de authenticatie-app op je telefoon, zoals Google Authenticator of wachtwoordbeheerders zoals 1Password.',
+
+        'enable' => 'Stel tweestapsverificatie in',
+    ],
+
     'locked' => [
         'title' => 'Account is vergrendeld',
 
@@ -20,7 +28,7 @@ return [
     'recovery_codes' => [
         'title' => 'Herstelcodes',
 
-        'intro' => 'Wanneer tweestapsverificatie is ingeschakeld, wordt je tijdens de verificatie gevraagd om een veilige, willekeurige token in te voeren. Je kunt deze token verkrijgen via de authenticatie-app op je telefoon, zoals Google Authenticator of wachtwoordbeheerders zoals 1Password.',
+        'intro' => 'Wanneer tweestapsverificatie is ingeschakeld, wordt je tijdens de verificatie gevraagd om een token in te voeren. Je kunt deze token verkrijgen via de authenticatie-app op je telefoon, zoals Google Authenticator of wachtwoordbeheerders zoals 1Password.',
 
         'codes' => [
             'new' => 'Je nieuwe herstelcodes',
@@ -49,20 +57,36 @@ return [
     'reset' => [
         'title' => 'Herstel tweestapsverificatie-instellingen',
 
-        'me_intro_1' => 'Dit verwijdert alle tweestapsverificatiegegevens van je account en logt je uit.',
-        'me_intro_2' => 'De volgende keer dat je inlogt, moet je tweestapsverificatie opnieuw instellen voordat je toegang krijgt tot het bedieningspaneel.',
+        'me_intro_1' => 'Dit verwijdert alle tweestapsverificatiegegevens van je account.',
+        'me_intro_2' => 'Je kan tweestapsverificatie opnieuw instellen in het bedieningspaneel.',
 
-        'user_intro_1' => 'Dit verwijdert alle tweestapsverificatiegegevens van hun account en logt hen uit.',
-        'user_intro_2' => 'De volgende keer dat zij inloggen, moeten ze tweestapsverificatie opnieuw instellen voordat ze toegang krijgen tot het bedieningspaneel.',
+        'me_enforced_intro_1' => 'Dit verwijdert alle tweestapsverificatiegegevens van je account en logt je uit.',
+        'me_enforced_intro_2' => 'De volgende keer dat je inlogt, moet je tweestapsverificatie opnieuw instellen voordat je toegang krijgt tot het bedieningspaneel.',
+
+        'user_intro_1' => 'Dit verwijdert alle tweestapsverificatiegegevens van hun account.',
+        'user_intro_2' => 'Ze kunnen tweestapsverificatie opnieuw instellen in hun profiel in het bedieningspaneel.',
+
+        'user_enforced_intro_1' => 'Dit verwijdert alle tweestapsverificatiegegevens van hun account en logt hen uit.',
+        'user_enforced_intro_2' => 'De volgende keer dat zij inloggen, moeten ze tweestapsverificatie opnieuw instellen voordat ze toegang krijgen tot het bedieningspaneel.',
 
         'confirm' => [
             'title' => 'Weet je het zeker?',
 
-            'me_1' => 'Dit verwijdert alle tweestapsverificatiegegevens van je account en logt je <strong>onmiddellijk</strong> uit. Je moet tweestapsverificatie opnieuw instellen bij je volgende aanmelding.',
-            'me_2' => 'Weet je zeker dat je dit wilt doen?',
+            'me_1' => 'Dit verwijdert alle tweestapsverificatiegegevens van je account.',
+            'me_2' => 'Je kan tweestapsverificatie opnieuw instellen in je profiel in het bedieningspaneel.',
+            'me_3' => 'Weet je zeker dat je dit wilt doen?',
 
-            'user_1' => 'Dit verwijdert alle tweestapsverificatiegegevens van hun account en logt hen uit bij hun volgende bezoek. Ze moeten tweestapsverificatie opnieuw instellen bij hun volgende aanmelding.',
-            'user_2' => 'Weet je zeker dat je dit wilt doen?',
+            'me_enforced_1' => 'Dit verwijdert alle tweestapsverificatiegegevens van je account en logt je <strong>onmiddellijk</strong> uit.',
+            'me_enforced_2' => 'Je moet tweestapsverificatie opnieuw instellen bij je volgende aanmelding.',
+            'me_enforced_3' => 'Weet je zeker dat je dit wilt doen?',
+
+            'user_1' => 'Dit verwijdert alle tweestapsverificatiegegevens van hun account.',
+            'user_2' => 'Ze kunnen tweestapsverificatie opnieuw instellen in hun profiel in het bedieningspaneel.',
+            'user_3' => 'Weet je zeker dat je dit wilt doen?',
+
+            'user_enforced_1' => 'Dit verwijdert alle tweestapsverificatiegegevens van hun account en logt hen uit bij hun volgende bezoek.',
+            'user_enforced_2' => 'Ze moeten tweestapsverificatie opnieuw instellen bij hun volgende aanmelding.',
+            'user_enforced_3' => 'Weet je zeker dat je dit wilt doen?',
         ],
 
         'action' => 'Herstel tweestapsverificatie-instellingen',
@@ -73,7 +97,8 @@ return [
     'messages' => [
         'wrong_view' => 'Het tweestapsverificatieveldtype kan alleen worden gebruikt op de weergave "Gebruikers bewerken".',
 
-        'not_setup' => 'Tweestapsverificatie is nog niet ingesteld. Je kunt de tweestapsverificatiegegevens beheren nadat de gebruiker het instelproces heeft voltooid.',
+        'not_setup_1' => 'Tweestapsverificatie is nog niet ingesteld.',
+        'not_setup_2' => 'Je kunt de tweestapsverificatiegegevens beheren nadat de gebruiker het instelproces heeft voltooid.',
 
         'not_enabled' => 'Tweestapsverificatie is niet ingeschakeld voor deze site.',
     ],

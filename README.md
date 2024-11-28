@@ -45,5 +45,9 @@ help you. So be awesome - it'll feel fantastic.
 ## Credits
 
 - [Marty Friedel](https://github.com/martyf)
-- [Fabio Widmer](https://github.com/FabioWidmer) for Swiss German translations
-- [Joshua van der Poll](https://github.com/joshuavanderpoll) for Dutch translations
+- [Fabio Widmer](https://github.com/FabioWidmer) and [Marco Rieser](https://github.com/marcorieser) for Swiss German
+  translations
+- [Joshua van der Poll](https://github.com/joshuavanderpoll) and [Richard Verbruggen](https://github.com/vannut) for
+  Dutch translations
+- [Håvard Grimelid](https://github.com/hgrimelid) for Norwegian Bokmål translations
+- [Encodia](https://github.com/encodiaweb) for Italian translations

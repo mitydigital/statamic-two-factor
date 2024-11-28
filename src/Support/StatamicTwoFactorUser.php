@@ -7,10 +7,12 @@ use Statamic\Facades\User;
 
 class StatamicTwoFactorUser
 {
-    public function getLastChallenged(): ?string
+    public function getLastChallenged(?\Statamic\Contracts\Auth\User $user = null): ?string
     {
         // get the user
-        $user = $this->get();
+        if (! $user) {
+            $user = $this->get();
+        }
 
         $lastChallenged = null;
 
@@ -39,10 +41,12 @@ class StatamicTwoFactorUser
         return User::current();
     }
 
-    public function setLastChallenged(): static
+    public function setLastChallenged(?\Statamic\Contracts\Auth\User $user = null): static
     {
         // get the user
-        $user = $this->get();
+        if (! $user) {
+            $user = $this->get();
+        }
 
         if (! $user) {
             return $this;
@@ -59,10 +63,12 @@ class StatamicTwoFactorUser
         return $this;
     }
 
-    public function clearLastChallenged(): static
+    public function clearLastChallenged(?\Statamic\Contracts\Auth\User $user = null): static
     {
         // get the user
-        $user = $this->get();
+        if (! $user) {
+            $user = $this->get();
+        }
 
         if (! $user) {
             return $this;
@@ -79,9 +85,11 @@ class StatamicTwoFactorUser
         return $this;
     }
 
-    public function isTwoFactorEnforceable(): bool
+    public function isTwoFactorEnforceable(?\Statamic\Contracts\Auth\User $user = null): bool
     {
-        $user = static::get();
+        if (! $user) {
+            $user = $this->get();
+        }
 
         // no user - so not enforceable
         if (! $user) {

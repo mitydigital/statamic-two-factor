@@ -7,6 +7,7 @@ use MityDigital\StatamicTwoFactor\Actions\EnableTwoFactorAuthentication;
 use MityDigital\StatamicTwoFactor\Http\Controllers\TwoFactorSetupController;
 use MityDigital\StatamicTwoFactor\Support\Google2FA;
 use MityDigital\StatamicTwoFactor\Support\RecoveryCode;
+use Statamic\Facades\Role;
 
 beforeEach(function () {
     $this->user = createUser();
@@ -36,6 +37,27 @@ it('uses the enable two factor setup action', function () {
     $this->get(action([TwoFactorSetupController::class, 'index']))
         ->assertViewHas('qr')
         ->assertViewHas('secret_key');
+});
+
+it('has the correct cancellable property', function () {
+    $this->get(action([TwoFactorSetupController::class, 'index']))
+        ->assertViewHas('cancellable', false);
+
+    // no roles enforced
+    config()->set('statamic-two-factor.enforced_roles', []);
+
+    $user = createUser(false);
+    $this->actingAs($user);
+
+    $role = Role::make('enforceable_role')
+        ->addPermission('access cp')
+        ->save();
+
+    $user->assignRole($role)->save();
+
+    $this->get(action([TwoFactorSetupController::class, 'index']))
+        ->assertViewHas('cancellable', true);
+
 });
 
 //

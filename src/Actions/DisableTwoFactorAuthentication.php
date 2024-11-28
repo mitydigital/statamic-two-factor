@@ -18,6 +18,6 @@ class DisableTwoFactorAuthentication
         $user->save();
 
         // remove the last challenged data
-        StatamicTwoFactorUser::clearLastChallenged();
+        StatamicTwoFactorUser::clearLastChallenged($user);
     }
 }

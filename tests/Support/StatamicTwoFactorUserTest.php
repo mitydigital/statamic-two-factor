@@ -22,21 +22,47 @@ it('sets, gets and clears the last challenged for the user', function () {
     // create user
     $user = createUserWithTwoFactor();
     $this->actingAs($user);
+    $otherUser = createUserWithTwoFactor();
 
     // should be null
-    expect(StatamicTwoFactorUser::getLastChallenged())->toBeNull();
+    expect(StatamicTwoFactorUser::getLastChallenged())->toBeNull()
+        ->and(StatamicTwoFactorUser::getLastChallenged($otherUser))->toBeNull();
 
     // set the challenge
     StatamicTwoFactorUser::setLastChallenged();
 
     // should be set
-    expect(StatamicTwoFactorUser::getLastChallenged())->not()->toBeNull();
+    expect(StatamicTwoFactorUser::getLastChallenged())->not()->toBeNull()
+        ->and(StatamicTwoFactorUser::getLastChallenged($otherUser))->toBeNull();
 
     // clear the challenge
     StatamicTwoFactorUser::clearLastChallenged();
 
     // should be null
-    expect(StatamicTwoFactorUser::getLastChallenged())->toBeNull();
+    expect(StatamicTwoFactorUser::getLastChallenged())->toBeNull()
+        ->and(StatamicTwoFactorUser::getLastChallenged($otherUser))->toBeNull();
+
+    //
+    // works with specific users
+    //
+
+    // should be null
+    expect(StatamicTwoFactorUser::getLastChallenged($user))->toBeNull()
+        ->and(StatamicTwoFactorUser::getLastChallenged($otherUser))->toBeNull();
+
+    // set the challenge
+    StatamicTwoFactorUser::setLastChallenged($otherUser);
+
+    // should be set
+    expect(StatamicTwoFactorUser::getLastChallenged($user))->toBeNull()
+        ->and(StatamicTwoFactorUser::getLastChallenged($otherUser))->not()->toBeNull();
+
+    // clear the challenge
+    StatamicTwoFactorUser::clearLastChallenged($otherUser);
+
+    // should be null
+    expect(StatamicTwoFactorUser::getLastChallenged($user))->toBeNull()
+        ->and(StatamicTwoFactorUser::getLastChallenged($otherUser))->toBeNull();
 });
 
 it('correctly determines if two factor is enforceable', function () {
@@ -123,4 +149,15 @@ it('correctly determines if two factor is enforceable', function () {
     expect($user->hasRole($enforceableRole))->toBeTrue()
         ->and($user->hasRole($standardRole))->toBeTrue()
         ->and(StatamicTwoFactorUser::isTwoFactorEnforceable())->toBeTrue();
+
+    //
+    // it works for a specified user
+    //
+    $otherUser = createUser(false);
+    expect(StatamicTwoFactorUser::isTwoFactorEnforceable($user))->toBeTrue() // the last test
+        ->and(StatamicTwoFactorUser::isTwoFactorEnforceable($otherUser))->toBeFalse(); // not enforced
+
+    $otherUser->makeSuper();
+    expect(StatamicTwoFactorUser::isTwoFactorEnforceable($user))->toBeTrue() // the last test
+        ->and(StatamicTwoFactorUser::isTwoFactorEnforceable($otherUser))->toBeTrue(); // super is enforced
 });

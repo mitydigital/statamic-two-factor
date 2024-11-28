@@ -2,6 +2,14 @@
 
 return [
 
+    'enable' => [
+        'title' => 'Zwei-Faktor-Authentifizierung aktivieren',
+
+        'intro' => 'Mit dem Einrichten der Zwei-Faktor-Authentifizierung wirst du während der Anmeldung nach einem Authentifizierungscode gefragt. Dieser Code wird von TOTP-Apps wie Google Authenticator, Bitwarden oder FreeOTP+ generiert.',
+
+        'enable' => 'Zwei-Faktor-Authentifizierung einrichten',
+    ],
+
     'locked' => [
         'title' => 'Konto ist gesperrt',
 
@@ -20,7 +28,7 @@ return [
     'recovery_codes' => [
         'title' => 'Wiederherstellungscodes',
 
-        'intro' => 'Mit dem Einrichten der Zwei-Faktor-Authentifizierung wirst du während der Anmeldung nach einem sicheren und zufälligen Authentifizierungscode gefragt. Dieser Code wird von TOTP-Apps wie Google Authenticator, Bitwarden oder FreeOTP+ generiert.',
+        'intro' => 'Mit dem Einrichten der Zwei-Faktor-Authentifizierung wirst du während der Anmeldung nach einem Authentifizierungscode gefragt. Dieser Code wird von TOTP-Apps wie Google Authenticator, Bitwarden oder FreeOTP+ generiert.',
 
         'codes' => [
             'new' => 'Deine neuen Wiederherstellungscodes',
@@ -49,20 +57,36 @@ return [
     'reset' => [
         'title' => 'Zwei-Faktor-Authentifizierung zurücksetzen',
 
-        'me_intro_1' => 'Dies entfernt die Zwei-Faktor-Authentifizierung und meldet dich direkt ab.',
-        'me_intro_2' => 'Bei der nächsten Anmeldung wirst du zum erneuten Aufsetzen der Zwei-Faktor-Authentifizierung aufgefordert.',
+        'me_intro_1' => 'Dies entfernt Angaben der Zwei-Faktor-Authentifizierung von deinem Konto.',
+        'me_intro_2' => 'Du kannst die Zwei-Faktor-Authentifizierung erneut auf deinem Profil im Kontrollzentrum aufsetzen.',
 
-        'user_intro_1' => 'Dies entfernt die Zwei-Faktor-Authentifizierung von den ausgewählten Konten und meldet diese direkt ab.',
-        'user_intro_2' => 'Bei der nächsten Anmeldung werden diese zum erneuten Aufsetzen der Zwei-Faktor-Authentifizierung aufgefordert.',
+        'me_enforced_intro_1' => 'This will remove all two factor authentication details from your account, and log you out.',
+        'me_enforced_intro_2' => 'The next time you log in, you will need to set up two factor authentication again before you can access the Control Panel.',
+
+        'user_intro_1' => 'Dies entfernt alle Angaben der Zwei-Faktor-Authentifizierung von ihrem Konto.',
+        'user_intro_2' => 'Sie kann die Zwei-Faktor-Authentifizierung erneut auf ihrem Profil im Kontrollzentrum aufsetzen.',
+
+        'user_enforced_intro_1' => 'This will remove all two factor authentication details from their account, and log you them out.',
+        'user_enforced_intro_2' => 'The next time they log in, they will need to set up two factor authentication again before they can access the Control Panel.',
 
         'confirm' => [
-            'title' => 'Bist du dir sicher?',
+            'title' => 'Are you sure?',
 
-            'me_1' => 'Dies entfernt die Zwei-Faktor-Authentifizierung und meldet dich <strong>direkt</strong> ab. Bei der nächsten Anmeldung wirst du zum erneuten Aufsetzen aufgefordert.',
-            'me_2' => 'Möchtest du dies wirklich tun?',
+            'me_1' => 'Dies entfernt Angaben der Zwei-Faktor-Authentifizierung von deinem Konto.',
+            'me_2' => 'Du kannst die Zwei-Faktor-Authentifizierung erneut auf deinem Profil im Kontrollzentrum aufsetzen.',
+            'me_3' => 'Möchtest du dies wirklich tun?',
 
-            'user_1' => 'Dies entfernt die Zwei-Faktor-Authentifizierung von den ausgewählten Konten und meldet diese <strong>direkt</strong> ab. Bei der nächsten Anmeldung werden diese zum erneuten Aufsetzen aufgefordert.',
-            'user_2' => 'Möchtest du dies wirklich tun?',
+            'me_enforced_1' => 'Dies entfernt die Zwei-Faktor-Authentifizierung und meldet dich <strong>direkt</strong> ab.',
+            'me_enforced_2' => 'Bei der nächsten Anmeldung wirst du zum erneuten Aufsetzen aufgefordert.',
+            'me_enforced_3' => 'Möchtest du dies wirklich tun?',
+
+            'user_1' => 'Dies entfernt alle Angaben der Zwei-Faktor-Authentifizierung von ihrem Konto.',
+            'user_2' => 'Sie kann die Zwei-Faktor-Authentifizierung erneut auf ihrem Profil im Kontrollzentrum aufsetzen.',
+            'user_3' => 'Möchtest du dies wirklich tun?',
+
+            'user_enforced_1' => 'Dies entfernt die Zwei-Faktor-Authentifizierung von den ausgewählten Konten und meldet diese <strong>direkt</strong> ab',
+            'user_enforced_2' => 'Bei der nächsten Anmeldung werden diese zum erneuten Aufsetzen aufgefordert.',
+            'user_enforced_3' => 'Möchtest du dies wirklich tun?',
         ],
 
         'action' => 'Zwei-Faktor-Authentifizierung zurücksetzen',
@@ -73,7 +97,8 @@ return [
     'messages' => [
         'wrong_view' => 'Das Zwei-Faktor-Feld kann lediglich bei der Ansicht «Benutzer bearbeiten» verwendet werden.',
 
-        'not_setup' => 'Zwei-Faktor-Authentifizierung wurde nicht aufgesetzt. Du kannst diese nach dem Aufsetzen durch den Benutzer verwalten.',
+        'not_setup_1' => 'Zwei-Faktor-Authentifizierung wurde nicht aufgesetzt.',
+        'not_setup_2' => 'Du kannst diese nach dem Aufsetzen durch den Benutzer verwalten.',
 
         'not_enabled' => 'Zwei-Faktor-Authentifizierung ist für diese Seite nicht aktiviert.',
     ],
