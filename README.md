@@ -11,6 +11,42 @@
 
 > A two factor authentication (2FA) addon for Statamic.
 
+Two Factor for Statamic is an addon for Statamic that enables users of the Control Panel (CP) to utilise two factor
+authentication using a one-time password (such as with Google Authenticator or password manager apps like 1Password).
+
+This addon can enforce two factor authentication to:
+
+- all CP users (the default), or
+- users by Role (the `enforced_roles` config property)
+
+If you have two Roles - Admin and Author - and you enforce two factor for Admin, any Author users can optionally opt-in
+to Two Factor by visiting their profile.
+
+## Features
+
+This addon enables two factor authentication for users of the Control Panel. When enabled, users will be prompted to set
+up two factor before they can continue. The addon also creates emergency recovery codes for each user's account.
+
+This addon:
+
+- can be enabled or disabled per environment (such as disabling on your local dev environment)
+- can be enabled for all users (default) or by Roles, with non-enforced Roles optionally able to opt-in
+  locks user accounts after a number of failed two factor challenge attempts
+- can re-challenge users after a period of time (default to 30 days, or can be disabled)
+- adds a fieldtype for user and profile editing
+
+Users are able to:
+
+- show or re-generate their emergency recovery codes
+- remove two factor authentication (which will log them out, and require set up on their next login)
+
+Admin can:
+
+- unlock user accounts
+- remove two factor setup details from any user
+
+These admin behaviours are connected to Statamic's "edit" permission for Users.
+
 ## Two Factor for Statamic is a Commercial Addon.
 
 You can use it for free while in development, but requires a license to use on a live site.
