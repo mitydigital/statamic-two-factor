@@ -46,7 +46,7 @@ class EnforceTwoFactor
                         ! Str::startsWith($request->path(), config('statamic.cp.route').'/preferences/js')) {
 
                         // if we have no challenge token, it has expired
-                        if (! $lastChallenge || Carbon::parse($lastChallenge)->addMinutes(config('statamic-two-factor.validity'))->isPast()) {
+                        if (! $lastChallenge || Carbon::parse($lastChallenge)->addMinutes((int) config('statamic-two-factor.validity'))->isPast()) {
                             // not yet challenged, or expired, so yes, let's challenge
                             return redirect(cp_route('statamic-two-factor.challenge'))->with('two_factor_referer', $request->getRequestUri());
                         }
