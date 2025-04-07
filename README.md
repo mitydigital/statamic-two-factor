@@ -2,7 +2,7 @@
 
 <!-- statamic:hide -->
 
-![Statamic 5+](https://img.shields.io/badge/Statamic-5+-FF269E?style=for-the-badge&link=https://statamic.com)
+![Statamic 5](https://img.shields.io/badge/Statamic-5-FF269E?style=for-the-badge&link=https://statamic.com)
 [![Statamic Two Factor on Packagist](https://img.shields.io/packagist/v/mitydigital/statamic-two-factor?style=for-the-badge)](https://packagist.org/packages/mitydigital/statamic-two-factor/stats)
 
 ---
@@ -10,6 +10,20 @@
 <!-- /statamic:hide -->
 
 > A two factor authentication (2FA) addon for Statamic.
+
+## We're about to become a core feature!
+
+The Statamic team have migrated this addon in to Statamic's core for Statamic 6.
+
+**Yes, that means two factor authentication will be a core feature of Statamic 6.**
+
+There will be no updates to this addon to support Statamic 6, however security updates will be released until
+the end of Statamic 5's security update window from the core Statamic team.
+
+Thank you for your support of this addon over the years - if you've found it useful or just want to say hi, please
+reach out.
+
+## Introduction
 
 Two Factor for Statamic is an addon for Statamic that enables users of the Control Panel (CP) to utilise two factor
 authentication using a one-time password (such as with Google Authenticator or password manager apps like 1Password).
@@ -50,6 +64,9 @@ These admin behaviours are connected to Statamic's "edit" permission for Users.
 ## Two Factor for Statamic is a Commercial Addon.
 
 You can use it for free while in development, but requires a license to use on a live site.
+
+Please note that this is only for Statamic 5 - from Statamic 6, the functionality offered by this addon will
+be a core feature.
 
 Learn more or buy a license on the [Statamic Marketplace](https://statamic.com/addons/mity-digital/two-factor)!
 
