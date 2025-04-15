@@ -100,6 +100,6 @@ return [
         'not_setup_1' => 'Two Factor Authentication has not been set up yet.',
         'not_setup_2' => 'You can manage two factor authentication details after the user has completed the setup process.',
 
-        'not_enabled' => 'Two Factor Authtentication is not enabled for this site.',
+        'not_enabled' => 'Two Factor Authentication is not enabled for this site.',
     ],
 ];
