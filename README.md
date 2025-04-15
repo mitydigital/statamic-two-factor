@@ -104,3 +104,4 @@ help you. So be awesome - it'll feel fantastic.
   Dutch translations
 - [Håvard Grimelid](https://github.com/hgrimelid) for Norwegian Bokmål translations
 - [Encodia](https://github.com/encodiaweb) for Italian translations
+- [Danique Wijnalda](https://github.com/dnwjn) for a language typo fix
