@@ -2,7 +2,6 @@
 
 namespace MityDigital\StatamicTwoFactor\Actions;
 
-use MityDigital\StatamicTwoFactor\Facades\StatamicTwoFactorUser;
 use Statamic\Auth\User;
 
 class DisableTwoFactorAuthentication
@@ -16,8 +15,5 @@ class DisableTwoFactorAuthentication
         $user->set('two_factor_recovery_codes', null);
         $user->set('two_factor_locked', false);
         $user->save();
-
-        // remove the last challenged data
-        StatamicTwoFactorUser::clearLastChallenged($user);
     }
 }
