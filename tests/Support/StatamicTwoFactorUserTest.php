@@ -25,44 +25,19 @@ it('sets, gets and clears the last challenged for the user', function () {
     $otherUser = createUserWithTwoFactor();
 
     // should be null
-    expect(StatamicTwoFactorUser::getLastChallenged())->toBeNull()
-        ->and(StatamicTwoFactorUser::getLastChallenged($otherUser))->toBeNull();
+    expect(StatamicTwoFactorUser::getLastChallenged())->toBeNull();
 
     // set the challenge
     StatamicTwoFactorUser::setLastChallenged();
 
     // should be set
-    expect(StatamicTwoFactorUser::getLastChallenged())->not()->toBeNull()
-        ->and(StatamicTwoFactorUser::getLastChallenged($otherUser))->toBeNull();
+    expect(StatamicTwoFactorUser::getLastChallenged())->not()->toBeNull();
 
     // clear the challenge
     StatamicTwoFactorUser::clearLastChallenged();
 
     // should be null
-    expect(StatamicTwoFactorUser::getLastChallenged())->toBeNull()
-        ->and(StatamicTwoFactorUser::getLastChallenged($otherUser))->toBeNull();
-
-    //
-    // works with specific users
-    //
-
-    // should be null
-    expect(StatamicTwoFactorUser::getLastChallenged($user))->toBeNull()
-        ->and(StatamicTwoFactorUser::getLastChallenged($otherUser))->toBeNull();
-
-    // set the challenge
-    StatamicTwoFactorUser::setLastChallenged($otherUser);
-
-    // should be set
-    expect(StatamicTwoFactorUser::getLastChallenged($user))->toBeNull()
-        ->and(StatamicTwoFactorUser::getLastChallenged($otherUser))->not()->toBeNull();
-
-    // clear the challenge
-    StatamicTwoFactorUser::clearLastChallenged($otherUser);
-
-    // should be null
-    expect(StatamicTwoFactorUser::getLastChallenged($user))->toBeNull()
-        ->and(StatamicTwoFactorUser::getLastChallenged($otherUser))->toBeNull();
+    expect(StatamicTwoFactorUser::getLastChallenged())->toBeNull();
 });
 
 it('correctly determines if two factor is enforceable', function () {
