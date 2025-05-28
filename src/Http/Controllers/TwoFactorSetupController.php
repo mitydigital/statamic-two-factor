@@ -64,6 +64,9 @@ class TwoFactorSetupController extends BaseController
         Auth::guard()->login($user, $request->boolean('remember'));
         $request->session()->regenerate();
 
+        // forget the login data
+        $request->session()->forget(['login.id', 'login.remember']);
+
         Toast::success(__('statamic-two-factor::messages.setup'));
 
         return redirect(cp_route('index'));

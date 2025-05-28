@@ -63,6 +63,9 @@ class TwoFactorChallengeController extends BaseController
         // forget the attempts count
         $request->session()->forget('statamic_two_factor_attempts');
 
+        // forget the login data
+        $request->session()->forget(['login.id', 'login.remember']);
+
         if (! $request->user()) {
             // log them in
             Auth::guard()->login($user, $request->boolean('remember'));
