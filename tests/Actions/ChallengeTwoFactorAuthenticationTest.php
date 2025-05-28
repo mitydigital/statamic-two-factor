@@ -38,6 +38,11 @@ it('throws an invalid challenge mode exception when an invalid mode is presented
 //
 
 it('throws a validation exception when a no one time code is present', function () {
+
+    StatamicTwoFactorUser::shouldReceive('setLastChallenged')
+        ->with($this->user)
+        ->never();
+
     $this->action->__invoke($this->user, 'code', null);
 })->throws(ValidationException::class, 'The provided two factor authentication code was invalid.');
 
@@ -45,7 +50,7 @@ it('throws a validation exception when an invalid one time code is present', fun
     $provider = app(Google2FA::class);
 
     // get a one-time code (so we can make sure we have a wrong one in the test)
-    $code = getCode();
+    $code = getCode($this->user);
 
     // if our actual code is 111111, then output 222222
     if ($code === '111111') {
@@ -53,6 +58,10 @@ it('throws a validation exception when an invalid one time code is present', fun
     } else {
         $code = '111111';
     }
+
+    StatamicTwoFactorUser::shouldReceive('setLastChallenged')
+        ->with($this->user)
+        ->never();
 
     // try to challenge with no code passed
     $this->action->__invoke($this->user, 'code', $code);
@@ -63,29 +72,32 @@ it('correctly accepts a one time code challenge', function () {
     testTime()->freeze();
 
     // get a code
-    $code = getCode();
+    $code = getCode($this->user);
 
-    // expect no session var
-    expect(StatamicTwoFactorUser::getLastChallenged($this->user))
-        ->toBeNull();
+    StatamicTwoFactorUser::shouldReceive('setLastChallenged')
+        ->with($this->user)
+        ->once();
 
     $this->action->__invoke($this->user, 'code', $code);
 
-    // expect new last challenged var
-    $lastChallenged = StatamicTwoFactorUser::getLastChallenged($this->user);
-    expect($lastChallenged)
-        ->not()->toBeNull()
-        ->toEqual(now());
 });
 
 //
 // RECOVERY CODES
 //
 it('throws a validation exception when no recovery code is presented', function () {
+    StatamicTwoFactorUser::shouldReceive('setLastChallenged')
+        ->with($this->user)
+        ->never();
+
     $this->action->__invoke($this->user, 'recovery_code', null);
 })->throws(ValidationException::class, 'The provided two factor authentication code was invalid.');
 
 it('throws a validation exception when an invalid recovery code is presented', function () {
+    StatamicTwoFactorUser::shouldReceive('setLastChallenged')
+        ->with($this->user)
+        ->never();
+
     $this->action->__invoke($this->user, 'recovery_code', 'invalid-code');
 })->throws(ValidationException::class, 'The provided two factor authentication code was invalid.');
 
@@ -93,21 +105,15 @@ it('correctly accepts a recovery code challenge', function () {
     // freeze time
     testTime()->freeze();
 
-    // expect no session var
-    expect(StatamicTwoFactorUser::getLastChallenged($this->user))
-        ->toBeNull();
+    StatamicTwoFactorUser::shouldReceive('setLastChallenged')
+        ->with($this->user)
+        ->once();
 
     // get a recovery code from the user
     $userRecoveryCode = collect(json_decode(decrypt($this->user->two_factor_recovery_codes), true))->first();
 
     // do it
     $this->action->__invoke($this->user, 'recovery_code', $userRecoveryCode);
-
-    // expect new last challenged var
-    $lastChallenged = StatamicTwoFactorUser::getLastChallenged($this->user);
-    expect($lastChallenged)
-        ->not()->toBeNull()
-        ->toEqual(now());
 });
 
 it('removes and replaces the used recovery code on a successful usage', function () {

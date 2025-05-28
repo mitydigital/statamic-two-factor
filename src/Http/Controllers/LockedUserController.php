@@ -5,10 +5,13 @@ namespace MityDigital\StatamicTwoFactor\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
-use Statamic\Facades\User;
+use MityDigital\StatamicTwoFactor\Concerns\GetsTwoFactorRequestUser;
+use MityDigital\StatamicTwoFactor\Facades\StatamicTwoFactorUser;
 
 class LockedUserController extends BaseController
 {
+    use GetsTwoFactorRequestUser;
+
     public function index(Request $request)
     {
         // This is in a separate controller because the route SHOULD be visible while you are logged in,
@@ -17,15 +20,26 @@ class LockedUserController extends BaseController
         //
         // This means it works from the "challenge" view within the CP, as well as the initial setup stage
 
-        // if the user is NOT locked, go back to the default CP route
-        if (! User::current()->two_factor_locked) {
+        $user = $request->user();
+
+        if (! $user) {
+            $user = $this->getUserFromRequest($request);
+        }
+
+        if (! $user) {
+            return redirect(cp_route('login'));
+        }
+
+        if (! $user->two_factor_locked) {
             return redirect(cp_route('index'));
         }
 
-        // log the user out of the right guard
-        Auth::guard(config('statamic.users.guards.cp', null))->logout();
+        StatamicTwoFactorUser::clearLastChallenged($user);
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
+        Auth::guard()->logout();
 
         // show the lock view
         return view('statamic-two-factor::locked');

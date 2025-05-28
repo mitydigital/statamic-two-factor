@@ -130,6 +130,11 @@ it('redirects to the challenge when validity is enabled and there is no recent c
             ->toBeTrue();
 
         // so far so good
+        // lock the time
+        StatamicTwoFactorUser::partialMock()
+            ->shouldReceive('getLastChallenged')
+            ->with($user)
+            ->andReturn(now());
 
         // set the time
         testTime()->freeze();
@@ -181,6 +186,11 @@ it('redirects to the challenge when validity is disabled and there is no recent 
         ->toBeTrue();
 
     // so far so good
+
+    StatamicTwoFactorUser::partialMock()
+        ->shouldReceive('getLastChallenged')
+        ->with($user)
+        ->andReturn(now());
 
     // set the time
     testTime()->freeze();

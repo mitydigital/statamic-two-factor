@@ -80,14 +80,14 @@ function createUserWithTwoFactor(bool $isSuper = true): Statamic\Auth\File\User|
     return $user;
 }
 
-function getCode()
+function getCode($user)
 {
     $provider = app(Google2FA::class);
 
     // get a one-time code (so we can make sure we have a wrong one in the test)
     $internalProvider = app(\PragmaRX\Google2FA\Google2FA::class);
 
-    return $internalProvider->getCurrentOtp($provider->getSecretKey());
+    return $internalProvider->getCurrentOtp($provider->getSecretKey($user));
 }
 
 function getPrivateProperty($className, $propertyName): ReflectionProperty

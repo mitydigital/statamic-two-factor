@@ -24,7 +24,7 @@ class UserSavedListener
 
         if (! $status['setup']) {
             // we only care about this if we are not set up
-            $status['cancellable'] = ! StatamicTwoFactorUser::isTwoFactorEnforceable();
+            $status['cancellable'] = ! StatamicTwoFactorUser::isTwoFactorEnforceable($user);
         }
 
         // update the user's status fields, and quietly save (shhhhh!)

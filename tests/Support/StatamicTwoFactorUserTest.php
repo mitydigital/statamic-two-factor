@@ -18,28 +18,6 @@ it('gets the current user', function () {
         ->id->toBe($user->id);
 });
 
-it('sets, gets and clears the last challenged for the user', function () {
-    // create user
-    $user = createUserWithTwoFactor();
-    $this->actingAs($user);
-    $otherUser = createUserWithTwoFactor();
-
-    // should be null
-    expect(StatamicTwoFactorUser::getLastChallenged())->toBeNull();
-
-    // set the challenge
-    StatamicTwoFactorUser::setLastChallenged();
-
-    // should be set
-    expect(StatamicTwoFactorUser::getLastChallenged())->not()->toBeNull();
-
-    // clear the challenge
-    StatamicTwoFactorUser::clearLastChallenged();
-
-    // should be null
-    expect(StatamicTwoFactorUser::getLastChallenged())->toBeNull();
-});
-
 it('correctly determines if two factor is enforceable', function () {
     // create a user
     $user = createUserWithTwoFactor();
@@ -57,32 +35,32 @@ it('correctly determines if two factor is enforceable', function () {
     // super user is always enforceable
     $user->makeSuper();
     expect($user->isSuper())->toBeTrue()
-        ->and(StatamicTwoFactorUser::isTwoFactorEnforceable())->toBeTrue();
+        ->and(StatamicTwoFactorUser::isTwoFactorEnforceable($user))->toBeTrue();
 
     // disable super
     $user->set('super', false)->save();
     expect($user->isSuper())->toBeFalse();
 
     // enforced roles is null - so any user should be enforced
-    expect(StatamicTwoFactorUser::isTwoFactorEnforceable())->toBeTrue();
+    expect(StatamicTwoFactorUser::isTwoFactorEnforceable($user))->toBeTrue();
 
     // assign a role
     $user->assignRole($enforceableRole)->save();
     expect($user->hasRole($enforceableRole))->toBeTrue()
         ->and($user->hasRole($standardRole))->toBeFalse()
-        ->and(StatamicTwoFactorUser::isTwoFactorEnforceable())->toBeTrue();
+        ->and(StatamicTwoFactorUser::isTwoFactorEnforceable($user))->toBeTrue();
 
     $user->removeRole($enforceableRole->handle());
     $user->assignRole($standardRole->handle());
     expect($user->hasRole($enforceableRole))->toBeFalse()
         ->and($user->hasRole($standardRole))->toBeTrue()
-        ->and(StatamicTwoFactorUser::isTwoFactorEnforceable())->toBeTrue();
+        ->and(StatamicTwoFactorUser::isTwoFactorEnforceable($user))->toBeTrue();
 
     $user->assignRole($enforceableRole->handle());
     $user->assignRole($standardRole->handle());
     expect($user->hasRole($enforceableRole))->toBeTrue()
         ->and($user->hasRole($standardRole))->toBeTrue()
-        ->and(StatamicTwoFactorUser::isTwoFactorEnforceable())->toBeTrue();
+        ->and(StatamicTwoFactorUser::isTwoFactorEnforceable($user))->toBeTrue();
 
     //
     // configure to be an array, but empty
@@ -90,7 +68,7 @@ it('correctly determines if two factor is enforceable', function () {
     config()->set('statamic-two-factor.enforced_roles', []);
 
     // assigned roles, but none are enforced
-    expect(StatamicTwoFactorUser::isTwoFactorEnforceable())->toBeFalse();
+    expect(StatamicTwoFactorUser::isTwoFactorEnforceable($user))->toBeFalse();
 
     //
     // configure to be an array, with actual roles
@@ -109,21 +87,21 @@ it('correctly determines if two factor is enforceable', function () {
     $user->assignRole($enforceableRole->handle());
     expect($user->hasRole($enforceableRole))->toBeTrue()
         ->and($user->hasRole($standardRole))->toBeFalse()
-        ->and(StatamicTwoFactorUser::isTwoFactorEnforceable())->toBeTrue();
+        ->and(StatamicTwoFactorUser::isTwoFactorEnforceable($user))->toBeTrue();
 
     // standard role
     $user->removeRole($enforceableRole->handle());
     $user->assignRole($standardRole->handle());
     expect($user->hasRole($enforceableRole))->toBeFalse()
         ->and($user->hasRole($standardRole))->toBeTrue()
-        ->and(StatamicTwoFactorUser::isTwoFactorEnforceable())->toBeFalse();
+        ->and(StatamicTwoFactorUser::isTwoFactorEnforceable($user))->toBeFalse();
 
     // both roles
     $user->assignRole($enforceableRole->handle());
     $user->assignRole($standardRole->handle());
     expect($user->hasRole($enforceableRole))->toBeTrue()
         ->and($user->hasRole($standardRole))->toBeTrue()
-        ->and(StatamicTwoFactorUser::isTwoFactorEnforceable())->toBeTrue();
+        ->and(StatamicTwoFactorUser::isTwoFactorEnforceable($user))->toBeTrue();
 
     //
     // it works for a specified user

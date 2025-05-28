@@ -9,7 +9,6 @@ use BaconQrCode\Renderer\RendererStyle\Fill;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
 use MityDigital\StatamicTwoFactor\Exceptions\TwoFactorNotSetUpException;
-use Statamic\Facades\User;
 
 class Google2FA
 {
@@ -22,30 +21,30 @@ class Google2FA
         $this->provider = app(\PragmaRX\Google2FA\Google2FA::class);
     }
 
-    public function getQrCodeSvg()
+    public function getQrCodeSvg(\Statamic\Contracts\Auth\User $user)
     {
         $svg = (new Writer(
             new ImageRenderer(
                 new RendererStyle(200, 0, null, null, Fill::uniformColor(new Rgb(255, 255, 255), new Rgb(45, 55, 72))),
                 new SvgImageBackEnd
             )
-        ))->writeString($this->getQrCode());
+        ))->writeString($this->getQrCode($user));
 
         return trim(substr($svg, strpos($svg, "\n") + 1));
     }
 
-    public function getQrCode()
+    public function getQrCode(\Statamic\Contracts\Auth\User $user)
     {
         return $this->provider->getQRCodeUrl(
             config('app.name'),
-            User::current()->email(),
-            $this->getSecretKey()
+            $user->email(),
+            $this->getSecretKey($user)
         );
     }
 
-    public function getSecretKey()
+    public function getSecretKey(\Statamic\Contracts\Auth\User $user)
     {
-        $secret = User::current()?->two_factor_secret;
+        $secret = $user->two_factor_secret;
         if (! $secret) {
             throw new TwoFactorNotSetUpException();
         }

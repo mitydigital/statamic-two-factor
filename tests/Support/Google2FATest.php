@@ -27,14 +27,14 @@ it('can generate a secret key', function () {
 });
 
 it('cannot return a otpauth url when user is not yet set up', function () {
-    $this->provider->getQrCode();
+    $this->provider->getQrCode($this->user);
 })->throws(TwoFactorNotSetUpException::class);
 
 it('can return a otpauth url when user is set up', function () {
     $this->user = createUserWithTwoFactor();
     $this->actingAs($this->user);
 
-    expect($this->provider->getQrCode())
+    expect($this->provider->getQrCode($this->user))
         ->toStartWith('otpauth://');
 });
 
@@ -43,7 +43,7 @@ it('can return the svg markup for the qr code', function () {
     $this->user = createUserWithTwoFactor();
     $this->actingAs($this->user);
 
-    expect($this->provider->getQrCodeSvg())
+    expect($this->provider->getQrCodeSvg($this->user))
         ->toStartWith('<svg');
 });
 
@@ -55,19 +55,19 @@ it('can verify a one time code', function () {
     $code = '111111';
     while ($code === '111111') {
         // create a code that is NOT 111111
-        $code = getCode();
+        $code = getCode($this->user);
     }
 
     // should verify correctly
     expect($code)
         ->not()->toBe('111111')
-        ->and($this->provider->verify($this->provider->getSecretKey(), $code))
+        ->and($this->provider->verify($this->provider->getSecretKey($this->user), $code))
         ->toBeTrue();
 
     // try with '111111', and should fail
     $code = '111111';
     expect($code)
         ->toBe('111111')
-        ->and($this->provider->verify($this->provider->getSecretKey(), $code))
+        ->and($this->provider->verify($this->provider->getSecretKey($this->user), $code))
         ->toBeFalse();
 });

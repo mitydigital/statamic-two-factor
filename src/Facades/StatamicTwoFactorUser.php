@@ -6,11 +6,11 @@ use Illuminate\Support\Facades\Facade;
 use Statamic\Contracts\Auth\User;
 
 /**
- * @method static ?string getLastChallenged(?\Statamic\Contracts\Auth\User $user = null)
+ * @method static ?string getLastChallenged(\Statamic\Contracts\Auth\User $user)
  * @method static User get()
- * @method static static setLastChallenged()
- * @method static static clearLastChallenged()
- * @method static bool isTwoFactorEnforceable()
+ * @method static static setLastChallenged(\Statamic\Contracts\Auth\User $user)
+ * @method static static clearLastChallenged(\Statamic\Contracts\Auth\User $user)
+ * @method static bool isTwoFactorEnforceable(\Statamic\Contracts\Auth\User $user)
  *
  * @see \MityDigital\StatamicTwoFactor\Support\StatamicTwoFactorUser
  */

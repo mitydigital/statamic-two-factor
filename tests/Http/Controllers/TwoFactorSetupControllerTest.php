@@ -12,7 +12,11 @@ use Statamic\Facades\Role;
 beforeEach(function () {
     $this->user = createUser();
     $this->user->set('super', true); // make a super user to get CP access
-    $this->actingAs($this->user);
+
+    session()->put([
+        'login.id' => $this->user->getKey(),
+        'login.remember' => false,
+    ]);
 });
 
 //
@@ -47,7 +51,10 @@ it('has the correct cancellable property', function () {
     config()->set('statamic-two-factor.enforced_roles', []);
 
     $user = createUser(false);
-    $this->actingAs($user);
+    session()->put([
+        'login.id' => $user->getKey(),
+        'login.remember' => false,
+    ]);
 
     $role = Role::make('enforceable_role')
         ->addPermission('access cp')
@@ -75,7 +82,7 @@ it('uses the confirm two factor setup action, and shows the recovery codes', fun
     }))));
 
     $this->post(action([TwoFactorSetupController::class, 'store']), [
-        'code' => getCode(),
+        'code' => getCode($this->user),
     ])
         ->assertViewIs('statamic-two-factor::recovery-codes')
         ->assertViewHas('recovery_codes');

@@ -2,23 +2,14 @@
 
 namespace MityDigital\StatamicTwoFactor\Support;
 
+use Illuminate\Support\Facades\Cookie;
 use Statamic\Facades\User;
 
 class StatamicTwoFactorUser
 {
-    public function getLastChallenged(): ?string
+    public function getLastChallenged(\Statamic\Contracts\Auth\User $user): ?string
     {
-        // get the user
-        $user = $this->get();
-
-        $lastChallenged = null;
-
-        // no user, return
-        if (! $user) {
-            return $lastChallenged;
-        }
-
-        $lastChallenged = session()->get('statamic-two-factor-last-challenged', null);
+        $lastChallenged = Cookie::get('statamic-two-factor-last-challenged', null);
 
         // if we have a challenge, decrypt it
         if ($lastChallenged) {
@@ -33,35 +24,29 @@ class StatamicTwoFactorUser
         return User::current();
     }
 
-    public function setLastChallenged(): static
+    public function setLastChallenged(\Statamic\Contracts\Auth\User $user): static
     {
-        // get the user
-        $user = $this->get();
-
         if (! $user) {
             return $this;
         }
 
-        session()->put('statamic-two-factor-last-challenged', encrypt(now()));
+        Cookie::queue('statamic-two-factor-last-challenged', encrypt(now()));
 
         return $this;
     }
 
-    public function clearLastChallenged(): static
+    public function clearLastChallenged(\Statamic\Contracts\Auth\User $user): static
     {
-        // get the user
-        $user = $this->get();
-
         if (! $user) {
             return $this;
         }
 
-        session()->put('statamic-two-factor-last-challenged', null);
+        Cookie::queue('statamic-two-factor-last-challenged', null);
 
         return $this;
     }
 
-    public function isTwoFactorEnforceable(?\Statamic\Contracts\Auth\User $user = null): bool
+    public function isTwoFactorEnforceable(\Statamic\Contracts\Auth\User $user): bool
     {
         if (! $user) {
             $user = $this->get();

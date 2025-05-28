@@ -6,7 +6,11 @@ use MityDigital\StatamicTwoFactor\Http\Controllers\TwoFactorChallengeController;
 beforeEach(function () {
     $this->user = createUserWithTwoFactor();
     $this->user->set('super', true); // make a super user to get CP access
-    $this->actingAs($this->user);
+
+    session()->put([
+        'login.id' => $this->user->getKey(),
+        'login.remember' => false,
+    ]);
 });
 
 it('shows the two factor challenge view', function () {
@@ -91,7 +95,7 @@ it('forgets the number of failed attempts when succeeded', function () {
 
     // succeed attempt 2
     $this->post(action([TwoFactorChallengeController::class, 'store']), [
-        'code' => getCode(),
+        'code' => getCode($this->user),
     ]);
 
     // count should be null
@@ -101,7 +105,7 @@ it('forgets the number of failed attempts when succeeded', function () {
 it('redirects to the cp after a successful challenge', function () {
     // post, and redirect
     $this->post(action([TwoFactorChallengeController::class, 'store']), [
-        'code' => getCode(),
+        'code' => getCode($this->user),
     ])
         ->assertRedirect(cp_route('index'));
 });
@@ -114,7 +118,7 @@ it('redirects to the referrer after a successful challenge', function () {
 
     // post, and redirect
     $this->post(action([TwoFactorChallengeController::class, 'store']), [
-        'code' => getCode(),
+        'code' => getCode($this->user),
     ])
         ->assertRedirect(cp_route('collections.index'));
 });
