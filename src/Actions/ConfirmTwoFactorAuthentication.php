@@ -28,6 +28,6 @@ class ConfirmTwoFactorAuthentication
         $user->save();
 
         // update (prevents going to the challenge screen after setup)
-        StatamicTwoFactorUser::setLastChallenged();
+        StatamicTwoFactorUser::setLastChallenged($user);
     }
 }

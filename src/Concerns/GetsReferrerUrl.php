@@ -34,6 +34,9 @@ trait GetsReferrerUrl
             'statamic.cp.statamic-two-factor.user.recovery-codes.generate',
             'statamic.cp.statamic-two-factor.user.unlock',
             'statamic.cp.statamic-two-factor.user.reset',
+
+            // ignore these
+            'statamic.cp.login',
         ];
 
         if (! $route || in_array($route->getName(), $internalRoutes)) {

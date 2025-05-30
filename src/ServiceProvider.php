@@ -3,6 +3,7 @@
 namespace MityDigital\StatamicTwoFactor;
 
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\Facades\Route;
 use MityDigital\StatamicTwoFactor\Console\Commands\UpdateUserBlueprintCommand;
 use MityDigital\StatamicTwoFactor\Fieldtypes\TwoFactor as TwoFactorFieldtype;
 use MityDigital\StatamicTwoFactor\Http\Middleware\EnforceTwoFactor;
@@ -50,6 +51,12 @@ class ServiceProvider extends AddonServiceProvider
 
     public function bootAddon()
     {
+        Route::middleware([
+            \Statamic\Http\Middleware\CP\SwapExceptionHandler::class,
+            'statamic.cp',
+        ])
+            ->group(__DIR__.'/../routes/web.php');
+
         $this->app->bind('statamicTwoFactorUser', function ($app) {
             return new StatamicTwoFactorUser();
         });

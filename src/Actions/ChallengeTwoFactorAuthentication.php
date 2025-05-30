@@ -35,7 +35,7 @@ class ChallengeTwoFactorAuthentication
         $this->{Str::camel('challenge_'.$mode)}($user, $code);
 
         // save session
-        StatamicTwoFactorUser::setLastChallenged();
+        StatamicTwoFactorUser::setLastChallenged($user);
     }
 
     protected function challengeCode(User $user, ?string $code): void

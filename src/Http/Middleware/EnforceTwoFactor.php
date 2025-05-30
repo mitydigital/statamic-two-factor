@@ -19,7 +19,7 @@ class EnforceTwoFactor
             $user = StatamicTwoFactorUser::get();
 
             // two factor setup (opt-in), or is two factor enforceable (mandatory) for this user?
-            if ($user->two_factor_completed || StatamicTwoFactorUser::isTwoFactorEnforceable()) {
+            if ($user->two_factor_completed || StatamicTwoFactorUser::isTwoFactorEnforceable($user)) {
 
                 // is two factor NOT set up?
                 if (! $user->two_factor_completed) {
@@ -28,7 +28,7 @@ class EnforceTwoFactor
                 }
 
                 // when were we last challenged?
-                $lastChallenge = StatamicTwoFactorUser::getLastChallenged();
+                $lastChallenge = StatamicTwoFactorUser::getLastChallenged($user);
 
                 // do we use validity?
                 // if so, we need to check if we have a challenge, and if it hasn't expired

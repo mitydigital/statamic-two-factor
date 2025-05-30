@@ -26,7 +26,7 @@ class UserResetController extends BaseController
         // redirect
         // if two factor is enforcable, and the same user, log them out
         $redirect = null;
-        if ($user->id === $requestingUser->id && StatamicTwoFactorUser::isTwoFactorEnforceable()) {
+        if ($user->id === $requestingUser->id && StatamicTwoFactorUser::isTwoFactorEnforceable($user)) {
             $redirect = cp_route('logout');
         }
 
