@@ -7,7 +7,7 @@ use Statamic\Facades\User;
 
 class StatamicTwoFactorUser
 {
-    public function getLastChallenged(\Statamic\Contracts\Auth\User $user): ?string
+    public function getLastChallenged(\Statamic\Contracts\Auth\User|\Illuminate\Foundation\Auth\User $user): ?string
     {
         $lastChallenged = Cookie::get('statamic-two-factor-last-challenged', null);
 
@@ -24,7 +24,7 @@ class StatamicTwoFactorUser
         return User::current();
     }
 
-    public function setLastChallenged(\Statamic\Contracts\Auth\User $user): static
+    public function setLastChallenged(\Statamic\Contracts\Auth\User|\Illuminate\Foundation\Auth\User $user): static
     {
         if (! $user) {
             return $this;
@@ -35,7 +35,7 @@ class StatamicTwoFactorUser
         return $this;
     }
 
-    public function clearLastChallenged(\Statamic\Contracts\Auth\User $user): static
+    public function clearLastChallenged(\Statamic\Contracts\Auth\User|\Illuminate\Foundation\Auth\User|null $user = null): static
     {
         if (! $user) {
             return $this;
@@ -46,7 +46,7 @@ class StatamicTwoFactorUser
         return $this;
     }
 
-    public function isTwoFactorEnforceable(\Statamic\Contracts\Auth\User $user): bool
+    public function isTwoFactorEnforceable(\Statamic\Contracts\Auth\User|\Illuminate\Foundation\Auth\User $user): bool
     {
         if (! $user) {
             $user = $this->get();
@@ -58,7 +58,6 @@ class StatamicTwoFactorUser
         }
 
         // super admin are always enforced
-
         if ($user->isSuper()) {
             return true;
         }
