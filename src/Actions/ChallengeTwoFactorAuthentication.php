@@ -17,7 +17,7 @@ class ChallengeTwoFactorAuthentication
     {
     }
 
-    public function __invoke(User $user, string $mode, ?string $code)
+    public function __invoke(\App\Models\User|User $user, string $mode, ?string $code)
     {
         // challenge
         if (empty($user->two_factor_secret)) {
@@ -38,7 +38,7 @@ class ChallengeTwoFactorAuthentication
         StatamicTwoFactorUser::setLastChallenged($user);
     }
 
-    protected function challengeCode(User $user, ?string $code): void
+    protected function challengeCode(\App\Models\User|User $user, ?string $code): void
     {
         if (empty($code) ||
             ! $this->provider->verify(decrypt($user->two_factor_secret), $code)) {
