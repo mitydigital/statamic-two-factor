@@ -10,7 +10,7 @@ beforeEach(function () {
 
 it('redirects to the dashboard if the user is not locked', function () {
     // not locked
-    expect($this->user->two_factor_locked)->toBeFalse();
+    expect($this->user->two_factor_locked)->toBeFalsy();
 
     // expect redirect
     $this->get(action([LockedUserController::class, 'index']))

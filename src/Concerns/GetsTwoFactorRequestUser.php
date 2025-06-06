@@ -5,6 +5,7 @@ namespace MityDigital\StatamicTwoFactor\Concerns;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Statamic\Facades\User;
 
 trait GetsTwoFactorRequestUser
 {
@@ -23,6 +24,6 @@ trait GetsTwoFactorRequestUser
             throw new HttpResponseException(redirect()->route('statamic.cp.login'));
         }
 
-        return $user;
+        return User::find($user->id);
     }
 }

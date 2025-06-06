@@ -59,7 +59,7 @@ function createUser(bool $isSuper = true): Statamic\Auth\File\User|Statamic\Auth
         $user->makeSuper()->save();
     }
 
-    return $user;
+    return User::find($user->id);
 }
 
 function createUserWithTwoFactor(bool $isSuper = true): Statamic\Auth\File\User|Statamic\Auth\Eloquent\User
@@ -77,7 +77,7 @@ function createUserWithTwoFactor(bool $isSuper = true): Statamic\Auth\File\User|
 
     $user->save();
 
-    return $user;
+    return User::find($user->id);
 }
 
 function getCode($user)

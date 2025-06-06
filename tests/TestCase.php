@@ -5,6 +5,7 @@ namespace MityDigital\StatamicTwoFactor\Tests;
 use Facades\Statamic\Version;
 use Illuminate\Encryption\Encrypter;
 use MityDigital\StatamicTwoFactor\ServiceProvider;
+use MityDigital\StatamicTwoFactor\Tests\Models\User;
 use Statamic\Console\Processes\Composer;
 use Statamic\Stache\Stores\UsersStore;
 use Statamic\Statamic;
@@ -66,6 +67,9 @@ abstract class TestCase extends AddonTestCase
 
         if (env('TWO_FACTOR_USER_MODE', 'file') === 'eloquent') {
             $app['config']->set('auth.providers.users.driver', 'eloquent');
+            if (true) {
+                $app['config']->set('auth.providers.users.model', User::class);
+            }
         } else {
             $app['config']->set('auth.providers.users.driver', 'statamic');
             $app['config']->set('statamic.users.repository', 'file');
