@@ -33,15 +33,15 @@ class LoginController extends \Statamic\Http\Controllers\CP\Auth\LoginController
 
             $user = $this->validateCredentials($request);
 
-            if ($user->two_factor_locked) {
-                return redirect(cp_route('statamic-two-factor.locked'));
-            }
-
             if (StatamicTwoFactorUser::isTwoFactorEnforceable($user)) {
                 $request->session()->put([
                     'login.id' => $user->getKey(),
                     'login.remember' => $request->boolean('remember'),
                 ]);
+
+                if ($user->two_factor_locked) {
+                    return redirect(cp_route('statamic-two-factor.locked'));
+                }
 
                 if ($user->two_factor_completed) {
                     return redirect(cp_route('statamic-two-factor.challenge'));
@@ -72,7 +72,7 @@ class LoginController extends \Statamic\Http\Controllers\CP\Auth\LoginController
         return \Statamic\Facades\User::find($user->id);
     }
 
-    protected function failAuthentication(Request $request, User $user)
+    protected function failAuthentication(Request $request, \App\Models\User|User $user)
     {
         $this->incrementLoginAttempts($request);
         $this->sendFailedLoginResponse($request);
