@@ -50,7 +50,11 @@ class LoginController extends \Statamic\Http\Controllers\CP\Auth\LoginController
                 }
             }
 
-            $this->authenticate($request, $user);
+            if (method_exists($this, 'authenticate')) {
+                $this->authenticate($request, $user);
+            } else {
+                $this->attemptLogin($request);
+            }
 
             return $this->authenticated($request, $this->guard()->user());
         } else {

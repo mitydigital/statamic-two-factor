@@ -29,6 +29,10 @@ class TwoFactorSetupController extends BaseController
 
         $user = $this->getUserFromRequest($request);
 
+        if ($user->two_factor_confirmed_at) {
+            return redirect(cp_route('index'));
+        }
+
         // enable two factor, and optionally reset the user's code
         $enable($user, $resetSecret);
 
