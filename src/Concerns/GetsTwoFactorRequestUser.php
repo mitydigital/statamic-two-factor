@@ -11,9 +11,9 @@ trait GetsTwoFactorRequestUser
 {
     protected function getUserFromRequest(Request $request)
     {
-        // if we're already logged in, use that user
+        // if we're already logged in, use that user (from Statamic's repository)
         if ($user = $request->user()) {
-            return $user;
+            return User::find($user->id);
         }
 
         // if we have this id, then we're in the process of logging in
