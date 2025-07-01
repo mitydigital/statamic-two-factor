@@ -4,7 +4,7 @@ namespace MityDigital\StatamicTwoFactor\Http\Controllers;
 
 use Illuminate\Http\Request;
 use MityDigital\StatamicTwoFactor\Facades\StatamicTwoFactorUser;
-use Statamic\Contracts\Auth\User;
+use Statamic\Facades\User;
 
 class LoginController extends \Statamic\Http\Controllers\CP\Auth\LoginController
 {
@@ -69,14 +69,14 @@ class LoginController extends \Statamic\Http\Controllers\CP\Auth\LoginController
 
         $user = tap($provider->retrieveByCredentials($request->only($this->username(), 'password')), function ($user) use ($provider, $request) {
             if (! $user || ! $provider->validateCredentials($user, ['password' => $request->password])) {
-                $this->failAuthentication($request, $user);
+                $this->failAuthentication($request);
             }
         });
 
-        return \Statamic\Facades\User::find($user->id);
+        return User::find($user->id);
     }
 
-    protected function failAuthentication(Request $request, \App\Models\User|User $user)
+    protected function failAuthentication(Request $request)
     {
         $this->incrementLoginAttempts($request);
         $this->sendFailedLoginResponse($request);
