@@ -25,9 +25,9 @@ it('correctly removes two factor authentication from the user', function () {
 
     // should be null
     expect($this->user)
-        ->two_factor_confirmed_at->toBe('')
-        ->two_factor_completed->toBe('')
-        ->two_factor_recovery_codes->toBe('')
-        ->two_factor_secret->toBe('')
+        ->two_factor_confirmed_at->toBeNull()
+        ->two_factor_completed->toBeNull()
+        ->two_factor_recovery_codes->toBeNull()
+        ->two_factor_secret->toBeNull()
         ->two_factor_locked->toBeFalse();
 });
